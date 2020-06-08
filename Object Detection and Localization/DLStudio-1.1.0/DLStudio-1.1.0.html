@@ -1,0 +1,1197 @@
+ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
+<html lang="en">
+<head>
+<title>
+DLStudio-1.1.0.html
+</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body bgcolor="#f0f0f8">
+<table width="100%" cellspacing="0" cellpadding="2" border="0" summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>DLStudio</strong></big></big> (version 1.1.0, 2020-March-28)</font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial">
+</font></td></tr></table>
+<p><a href="#DLStudio"><tt>DLStudio</tt></a>.py<br>
+<tt>
+&nbsp;<br>
+Version:&nbsp;1.1.0<br>
+&nbsp;&nbsp;&nbsp;<br>
+Author:&nbsp;Avinash&nbsp;Kak&nbsp;(kak@purdue.edu)<br>
+&nbsp;<br>
+Date:&nbsp;2020-March-28<br>
+&nbsp;<br>
+&nbsp;<br>
+</tt>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="2"> 
+<TR>
+<TH ALIGN=left>
+<tt>
+<b>Download Version 1.1.0:</b>&nbsp;  
+<a HREF="https://engineering.purdue.edu/kak/distDLS/DLStudio-1.1.0.tar.gz?download">gztar</a> 
+&nbsp;             
+<br>
+<br>
+&nbsp;
+</tt>
+</TH>
+<TD>
+<tt>
+&nbsp;&nbsp;&nbsp;&nbsp;
+Total number of downloads (all versions): 
+<?php   
+    $file = fopen("HowManyCounts.txt", "r") or exit("Unable to open file!");
+    echo fgets($file);
+    fclose($file);
+?>
+</tt>
+<br>
+<center>
+<tt>
+<font color="red" size="-2">
+&nbsp;&nbsp;&nbsp;&nbsp;
+This count is automatically updated at every rotation of
+<br> 
+&nbsp;&nbsp;&nbsp;&nbsp;
+the weblogs (normally once every two to four days)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+Last updated:
+<?php   
+    $file = fopen("LastUpdated.txt", "r") or exit("Unable to open file!");
+    echo fgets($file);
+    fclose($file);
+?>
+</font>
+</tt>
+</center>
+</TD>
+</TR>
+</TABLE>
+<br>
+<tt>
+<a HREF="DLStudio-1.1.0_CodeOnly.html">View the main module code file in your browser</a> 
+&nbsp;<br>
+&nbsp;<br>
+<a HREF="datasets_for_DLStudio.tar.gz">Download the datasets (101 MB)</a> 
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;<br>
+<font size="+2" color="red">CHANGES:<br>
+</font>
+<br>
+
+
+&nbsp;&nbsp;Version&nbsp;1.1.0:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;main&nbsp;reason&nbsp;for&nbsp;this&nbsp;version&nbsp;was&nbsp;my&nbsp;observation&nbsp;that&nbsp;when&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;training&nbsp;data&nbsp;is&nbsp;intentionally&nbsp;corrupted&nbsp;with&nbsp;a&nbsp;high&nbsp;level&nbsp;of&nbsp;noise,&nbsp;it<br>
+&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;possible&nbsp;for&nbsp;the&nbsp;output&nbsp;of&nbsp;regression&nbsp;to&nbsp;be&nbsp;a&nbsp;NaN&nbsp;(Not&nbsp;a&nbsp;Number).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;In&nbsp;my&nbsp;testing&nbsp;at&nbsp;noise&nbsp;levels&nbsp;of&nbsp;20%,&nbsp;50%,&nbsp;and&nbsp;80%,&nbsp;while&nbsp;you&nbsp;do&nbsp;not<br>
+&nbsp;&nbsp;&nbsp;&nbsp;see&nbsp;this&nbsp;problem&nbsp;when&nbsp;the&nbsp;noise&nbsp;level&nbsp;is&nbsp;20%,&nbsp;it&nbsp;definitely&nbsp;becomes&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;problem&nbsp;when&nbsp;the&nbsp;noise&nbsp;level&nbsp;is&nbsp;at&nbsp;50%.&nbsp;&nbsp;To&nbsp;deal&nbsp;with&nbsp;this&nbsp;issue,&nbsp;this<br>
+&nbsp;&nbsp;&nbsp;&nbsp;version&nbsp;includes&nbsp;the&nbsp;test&nbsp;'torch.isnan()'&nbsp;in&nbsp;the&nbsp;training&nbsp;and&nbsp;testing<br>
+&nbsp;&nbsp;&nbsp;&nbsp;code&nbsp;for&nbsp;object&nbsp;detection.&nbsp;&nbsp;This&nbsp;version&nbsp;of&nbsp;the&nbsp;module&nbsp;also&nbsp;provides<br>
+&nbsp;&nbsp;&nbsp;&nbsp;additional&nbsp;datasets&nbsp;with&nbsp;noise&nbsp;corrupted&nbsp;images&nbsp;with&nbsp;different&nbsp;levels<br>
+&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;noise.&nbsp;&nbsp;However,&nbsp;since&nbsp;the&nbsp;total&nbsp;size&nbsp;of&nbsp;the&nbsp;datasets&nbsp;now&nbsp;exceeds<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;file-size&nbsp;limit&nbsp;at&nbsp;'https://pypi.org',&nbsp;you'll&nbsp;need&nbsp;to&nbsp;download&nbsp;them<br>
+&nbsp;&nbsp;&nbsp;&nbsp;separately&nbsp;from&nbsp;the&nbsp;link&nbsp;provided&nbsp;in&nbsp;the&nbsp;main&nbsp;documentation&nbsp;page.<br>
+&nbsp;<br>
+&nbsp;&nbsp;Version&nbsp;1.0.9:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;With&nbsp;this&nbsp;version,&nbsp;you&nbsp;can&nbsp;now&nbsp;use&nbsp;<a href="#DLStudio">DLStudio</a>&nbsp;for&nbsp;experiments&nbsp;in&nbsp;semantic<br>
+&nbsp;&nbsp;&nbsp;&nbsp;segmentation&nbsp;of&nbsp;images.&nbsp;&nbsp;The&nbsp;code&nbsp;added&nbsp;to&nbsp;the&nbsp;module&nbsp;is&nbsp;in&nbsp;a&nbsp;new&nbsp;inner<br>
+&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;that,&nbsp;as&nbsp;you&nbsp;might&nbsp;guess,&nbsp;is&nbsp;named&nbsp;SemanticSegmentation.&nbsp;&nbsp;The<br>
+&nbsp;&nbsp;&nbsp;&nbsp;workhorse&nbsp;of&nbsp;this&nbsp;inner&nbsp;class&nbsp;is&nbsp;a&nbsp;new&nbsp;implementation&nbsp;of&nbsp;the&nbsp;famous<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Unet&nbsp;that&nbsp;I&nbsp;have&nbsp;named&nbsp;mUnet&nbsp;---&nbsp;the&nbsp;prefix&nbsp;"m"&nbsp;stands&nbsp;for&nbsp;"multi"&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;ability&nbsp;of&nbsp;the&nbsp;network&nbsp;to&nbsp;segment&nbsp;out&nbsp;multiple&nbsp;objects<br>
+&nbsp;&nbsp;&nbsp;&nbsp;simultaneously.&nbsp;&nbsp;This&nbsp;version&nbsp;of&nbsp;<a href="#DLStudio">DLStudio</a>&nbsp;also&nbsp;comes&nbsp;with&nbsp;a&nbsp;new<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dataset,&nbsp;PurdueShapes5MultiObject,&nbsp;for&nbsp;experimenting&nbsp;with&nbsp;mUnet.&nbsp;&nbsp;Each<br>
+&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;in&nbsp;this&nbsp;dataset&nbsp;contains&nbsp;a&nbsp;random&nbsp;number&nbsp;of&nbsp;selections&nbsp;from&nbsp;five<br>
+&nbsp;&nbsp;&nbsp;&nbsp;different&nbsp;shapes&nbsp;---&nbsp;rectangle,&nbsp;triangle,&nbsp;disk,&nbsp;oval,&nbsp;and&nbsp;star&nbsp;---&nbsp;that<br>
+&nbsp;&nbsp;&nbsp;&nbsp;are&nbsp;randomly&nbsp;scaled,&nbsp;oriented,&nbsp;and&nbsp;located&nbsp;in&nbsp;each&nbsp;image.<br>
+&nbsp;<br>
+&nbsp;&nbsp;Version&nbsp;1.0.7:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;main&nbsp;reason&nbsp;for&nbsp;creating&nbsp;this&nbsp;version&nbsp;of&nbsp;<a href="#DLStudio">DLStudio</a>&nbsp;is&nbsp;to&nbsp;be&nbsp;able&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;the&nbsp;module&nbsp;for&nbsp;illustrating&nbsp;how&nbsp;to&nbsp;simultaneously&nbsp;carry&nbsp;out<br>
+&nbsp;&nbsp;&nbsp;&nbsp;classification&nbsp;and&nbsp;regression&nbsp;(C&amp;R)&nbsp;with&nbsp;the&nbsp;same&nbsp;convolutional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;network.&nbsp;&nbsp;The&nbsp;specific&nbsp;C&amp;R&nbsp;problem&nbsp;that&nbsp;is&nbsp;solved&nbsp;in&nbsp;this&nbsp;version&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;problem&nbsp;of&nbsp;object&nbsp;detection&nbsp;and&nbsp;localization.&nbsp;You&nbsp;want&nbsp;a&nbsp;CNN&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;categorize&nbsp;the&nbsp;object&nbsp;in&nbsp;an&nbsp;image&nbsp;and,&nbsp;at&nbsp;the&nbsp;same&nbsp;time,&nbsp;estimate&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bounding-box&nbsp;for&nbsp;the&nbsp;detected&nbsp;object.&nbsp;Estimating&nbsp;the&nbsp;bounding-box&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;referred&nbsp;to&nbsp;as&nbsp;regression.&nbsp;&nbsp;All&nbsp;of&nbsp;the&nbsp;code&nbsp;related&nbsp;to&nbsp;object&nbsp;detection<br>
+&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;localization&nbsp;is&nbsp;in&nbsp;the&nbsp;inner&nbsp;class&nbsp;DetectAndLocalize&nbsp;of&nbsp;the&nbsp;main<br>
+&nbsp;&nbsp;&nbsp;&nbsp;module&nbsp;file.&nbsp;&nbsp;Training&nbsp;a&nbsp;CNN&nbsp;to&nbsp;solve&nbsp;the&nbsp;detection&nbsp;and&nbsp;localization<br>
+&nbsp;&nbsp;&nbsp;&nbsp;problem&nbsp;requires&nbsp;a&nbsp;dataset&nbsp;that,&nbsp;in&nbsp;addition&nbsp;to&nbsp;the&nbsp;class&nbsp;labels&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;objects,&nbsp;also&nbsp;provides&nbsp;bounding-box&nbsp;annotations&nbsp;for&nbsp;the&nbsp;objects.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Towards&nbsp;that&nbsp;end,&nbsp;this&nbsp;version&nbsp;also&nbsp;comes&nbsp;with&nbsp;a&nbsp;new&nbsp;dataset&nbsp;called<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PurdueShapes5.&nbsp;&nbsp;Another&nbsp;new&nbsp;inner&nbsp;class,&nbsp;CustomDataLoading,&nbsp;that&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;also&nbsp;included&nbsp;in&nbsp;Version&nbsp;1.0.7&nbsp;has&nbsp;the&nbsp;dataloader&nbsp;for&nbsp;the&nbsp;PurdueShapes5<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dataset.<br>
+&nbsp;<br>
+&nbsp;&nbsp;Version&nbsp;1.0.6:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;version&nbsp;has&nbsp;the&nbsp;bugfix&nbsp;for&nbsp;a&nbsp;bug&nbsp;in&nbsp;SkipBlock&nbsp;that&nbsp;was&nbsp;spotted&nbsp;by<br>
+&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;student&nbsp;as&nbsp;I&nbsp;was&nbsp;demonstrating&nbsp;in&nbsp;class&nbsp;the&nbsp;concepts&nbsp;related&nbsp;to&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;of&nbsp;skip&nbsp;connections&nbsp;in&nbsp;deep&nbsp;neural&nbsp;networks.<br>
+&nbsp;<br>
+&nbsp;&nbsp;Version&nbsp;1.0.5:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;version&nbsp;includes&nbsp;an&nbsp;inner&nbsp;class,&nbsp;SkipConnections,&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;experimenting&nbsp;with&nbsp;skip&nbsp;connections&nbsp;to&nbsp;improve&nbsp;the&nbsp;performance&nbsp;of&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;deep&nbsp;network.&nbsp;&nbsp;The&nbsp;Examples&nbsp;subdirectory&nbsp;of&nbsp;the&nbsp;distribution&nbsp;includes&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;script,&nbsp;playing_with_skip_connections.py,&nbsp;that&nbsp;demonstrates&nbsp;how&nbsp;you&nbsp;can<br>
+&nbsp;&nbsp;&nbsp;&nbsp;experiment&nbsp;with&nbsp;SkipConnections.&nbsp;&nbsp;The&nbsp;network&nbsp;class&nbsp;used&nbsp;by<br>
+&nbsp;&nbsp;&nbsp;&nbsp;SkipConnections&nbsp;is&nbsp;named&nbsp;BMEnet&nbsp;with&nbsp;an&nbsp;easy-to-use&nbsp;interface&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;experimenting&nbsp;with&nbsp;networks&nbsp;of&nbsp;arbitrary&nbsp;depth.<br>
+&nbsp;<br>
+&nbsp;&nbsp;Version&nbsp;1.0.4:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;I&nbsp;have&nbsp;added&nbsp;one&nbsp;more&nbsp;inner&nbsp;class,&nbsp;AutogradCustomization,&nbsp;to&nbsp;the&nbsp;module<br>
+&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;illustrates&nbsp;how&nbsp;to&nbsp;extend&nbsp;Autograd&nbsp;if&nbsp;you&nbsp;want&nbsp;to&nbsp;endow&nbsp;it&nbsp;with<br>
+&nbsp;&nbsp;&nbsp;&nbsp;additional&nbsp;functionality.&nbsp;And,&nbsp;most&nbsp;importantly,&nbsp;this&nbsp;version&nbsp;fixes&nbsp;an<br>
+&nbsp;&nbsp;&nbsp;&nbsp;important&nbsp;bug&nbsp;that&nbsp;caused&nbsp;wrong&nbsp;information&nbsp;to&nbsp;be&nbsp;written&nbsp;out&nbsp;to&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;disk&nbsp;when&nbsp;you&nbsp;tried&nbsp;to&nbsp;save&nbsp;the&nbsp;learned&nbsp;model&nbsp;at&nbsp;the&nbsp;end&nbsp;of&nbsp;a&nbsp;training<br>
+&nbsp;&nbsp;&nbsp;&nbsp;session.&nbsp;I&nbsp;have&nbsp;also&nbsp;cleaned&nbsp;up&nbsp;the&nbsp;comment&nbsp;blocks&nbsp;in&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;implementation&nbsp;code.<br>
+&nbsp;<br>
+&nbsp;&nbsp;Version&nbsp;1.0.3:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;is&nbsp;the&nbsp;first&nbsp;public&nbsp;release&nbsp;version&nbsp;of&nbsp;this&nbsp;module.<br>
+&nbsp;<br>
+<font size="+2" color="red">INTRODUCTION:<br>
+</font>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Every&nbsp;design&nbsp;activity&nbsp;involves&nbsp;mixing&nbsp;and&nbsp;matching&nbsp;things&nbsp;and&nbsp;doing&nbsp;so<br>
+&nbsp;&nbsp;&nbsp;&nbsp;repeatedly&nbsp;until&nbsp;you&nbsp;have&nbsp;achieved&nbsp;the&nbsp;desired&nbsp;results.&nbsp;&nbsp;The&nbsp;same&nbsp;thing<br>
+&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;true&nbsp;of&nbsp;modern&nbsp;deep&nbsp;learning&nbsp;networks.&nbsp;&nbsp;When&nbsp;you&nbsp;are&nbsp;working&nbsp;with&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;data&nbsp;domain,&nbsp;it&nbsp;is&nbsp;likely&nbsp;that&nbsp;you&nbsp;would&nbsp;want&nbsp;to&nbsp;experiment&nbsp;with<br>
+&nbsp;&nbsp;&nbsp;&nbsp;different&nbsp;network&nbsp;layouts&nbsp;that&nbsp;you&nbsp;may&nbsp;have&nbsp;dreamed&nbsp;of&nbsp;yourself&nbsp;or&nbsp;that<br>
+&nbsp;&nbsp;&nbsp;&nbsp;you&nbsp;may&nbsp;have&nbsp;seen&nbsp;somewhere&nbsp;in&nbsp;a&nbsp;publication&nbsp;or&nbsp;at&nbsp;some&nbsp;web&nbsp;site.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;goal&nbsp;of&nbsp;this&nbsp;module&nbsp;is&nbsp;to&nbsp;make&nbsp;it&nbsp;easier&nbsp;to&nbsp;engage&nbsp;in&nbsp;this&nbsp;process.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;idea&nbsp;is&nbsp;that&nbsp;you&nbsp;would&nbsp;drop&nbsp;in&nbsp;the&nbsp;module&nbsp;a&nbsp;new&nbsp;network&nbsp;and&nbsp;you<br>
+&nbsp;&nbsp;&nbsp;&nbsp;would&nbsp;be&nbsp;able&nbsp;to&nbsp;see&nbsp;right&nbsp;away&nbsp;the&nbsp;results&nbsp;you&nbsp;would&nbsp;get&nbsp;with&nbsp;the&nbsp;new<br>
+&nbsp;&nbsp;&nbsp;&nbsp;network.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;module&nbsp;also&nbsp;allows&nbsp;you&nbsp;to&nbsp;specify&nbsp;a&nbsp;network&nbsp;with&nbsp;a&nbsp;configuration<br>
+&nbsp;&nbsp;&nbsp;&nbsp;string.&nbsp;&nbsp;The&nbsp;module&nbsp;parses&nbsp;the&nbsp;string&nbsp;and&nbsp;creates&nbsp;the&nbsp;network.&nbsp;&nbsp;In<br>
+&nbsp;&nbsp;&nbsp;&nbsp;upcoming&nbsp;revisions&nbsp;of&nbsp;this&nbsp;module,&nbsp;I&nbsp;am&nbsp;planning&nbsp;to&nbsp;add&nbsp;additional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;features&nbsp;to&nbsp;this&nbsp;approach&nbsp;in&nbsp;order&nbsp;to&nbsp;make&nbsp;it&nbsp;more&nbsp;general&nbsp;and&nbsp;more<br>
+&nbsp;&nbsp;&nbsp;&nbsp;useful&nbsp;for&nbsp;production&nbsp;work.<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;EXTENDING&nbsp;AUTOGRAD:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Version&nbsp;1.0.4&nbsp;of&nbsp;<a href="#DLStudio">DLStudio</a>&nbsp;incorporates&nbsp;a&nbsp;new&nbsp;inner&nbsp;class,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;AutogradCustomization,&nbsp;for&nbsp;illustrating&nbsp;how&nbsp;you&nbsp;can&nbsp;write&nbsp;your&nbsp;own&nbsp;code<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;customizing&nbsp;the&nbsp;behavior&nbsp;of&nbsp;PyTorch's&nbsp;Autograd&nbsp;module.&nbsp;Your<br>
+&nbsp;&nbsp;&nbsp;&nbsp;starting&nbsp;point&nbsp;for&nbsp;understanding&nbsp;the&nbsp;code&nbsp;in&nbsp;AutogradCustomization<br>
+&nbsp;&nbsp;&nbsp;&nbsp;should&nbsp;be&nbsp;the&nbsp;following&nbsp;script&nbsp;in&nbsp;the&nbsp;Examples&nbsp;directory&nbsp;of&nbsp;the&nbsp;distro:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extending_autograd.py<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Extending&nbsp;Autograd&nbsp;requires&nbsp;that&nbsp;you&nbsp;define&nbsp;a&nbsp;new&nbsp;verb&nbsp;class&nbsp;---&nbsp;as&nbsp;I<br>
+&nbsp;&nbsp;&nbsp;&nbsp;have&nbsp;with&nbsp;the&nbsp;class&nbsp;DoSillyWithTensor&nbsp;shown&nbsp;in&nbsp;the&nbsp;main&nbsp;module&nbsp;file&nbsp;---<br>
+&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;definitions&nbsp;for&nbsp;two&nbsp;static&nbsp;methods,&nbsp;"forward()"&nbsp;and&nbsp;"backward()".<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Note&nbsp;that&nbsp;an&nbsp;instance&nbsp;constructed&nbsp;from&nbsp;this&nbsp;class&nbsp;is&nbsp;callable.<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;SKIP&nbsp;CONNECTIONS:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Starting&nbsp;with&nbsp;Version&nbsp;1.0.6,&nbsp;you&nbsp;can&nbsp;now&nbsp;experiment&nbsp;with&nbsp;skip<br>
+&nbsp;&nbsp;&nbsp;&nbsp;connections&nbsp;in&nbsp;a&nbsp;CNN&nbsp;to&nbsp;see&nbsp;how&nbsp;a&nbsp;deep&nbsp;network&nbsp;with&nbsp;this&nbsp;feature&nbsp;might<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yield&nbsp;improved&nbsp;classification&nbsp;results.&nbsp;&nbsp;Deep&nbsp;networks&nbsp;suffer&nbsp;from&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;problem&nbsp;of&nbsp;vanishing&nbsp;gradients&nbsp;that&nbsp;degrades&nbsp;their&nbsp;performance.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Vanishing&nbsp;gradients&nbsp;means&nbsp;that&nbsp;the&nbsp;gradients&nbsp;of&nbsp;the&nbsp;loss&nbsp;calculated&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;early&nbsp;layers&nbsp;of&nbsp;a&nbsp;network&nbsp;become&nbsp;increasingly&nbsp;muted&nbsp;as&nbsp;the&nbsp;network<br>
+&nbsp;&nbsp;&nbsp;&nbsp;becomes&nbsp;deeper.&nbsp;&nbsp;An&nbsp;important&nbsp;mitigation&nbsp;strategy&nbsp;for&nbsp;addressing&nbsp;this<br>
+&nbsp;&nbsp;&nbsp;&nbsp;problem&nbsp;consists&nbsp;of&nbsp;creating&nbsp;a&nbsp;CNN&nbsp;using&nbsp;blocks&nbsp;with&nbsp;skip&nbsp;connections.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;code&nbsp;for&nbsp;using&nbsp;skip&nbsp;connections&nbsp;is&nbsp;in&nbsp;the&nbsp;inner&nbsp;class<br>
+&nbsp;&nbsp;&nbsp;&nbsp;SkipConnections&nbsp;of&nbsp;the&nbsp;module.&nbsp;&nbsp;And&nbsp;the&nbsp;network&nbsp;that&nbsp;allows&nbsp;you&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;construct&nbsp;a&nbsp;CNN&nbsp;with&nbsp;skip&nbsp;connections&nbsp;is&nbsp;named&nbsp;BMEnet.&nbsp;&nbsp;As&nbsp;shown&nbsp;in&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;script&nbsp;playing_with_skip_connections.py&nbsp;in&nbsp;the&nbsp;Examples&nbsp;directory&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;distribution,&nbsp;you&nbsp;can&nbsp;easily&nbsp;create&nbsp;a&nbsp;CNN&nbsp;with&nbsp;arbitrary&nbsp;depth&nbsp;just<br>
+&nbsp;&nbsp;&nbsp;&nbsp;by&nbsp;using&nbsp;the&nbsp;constructor&nbsp;option&nbsp;"depth"&nbsp;for&nbsp;BMEnet.&nbsp;The&nbsp;basic&nbsp;block&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;network&nbsp;constructed&nbsp;in&nbsp;this&nbsp;manner&nbsp;is&nbsp;called&nbsp;SkipBlock&nbsp;which,&nbsp;very<br>
+&nbsp;&nbsp;&nbsp;&nbsp;much&nbsp;like&nbsp;the&nbsp;BasicBlock&nbsp;in&nbsp;ResNet-18,&nbsp;has&nbsp;a&nbsp;couple&nbsp;of&nbsp;convolutional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;layers&nbsp;whose&nbsp;output&nbsp;is&nbsp;combined&nbsp;with&nbsp;the&nbsp;input&nbsp;to&nbsp;the&nbsp;block.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Note&nbsp;that&nbsp;the&nbsp;value&nbsp;given&nbsp;to&nbsp;the&nbsp;"depth"&nbsp;constructor&nbsp;option&nbsp;for&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;BMEnet&nbsp;class&nbsp;does&nbsp;NOT&nbsp;translate&nbsp;directly&nbsp;into&nbsp;the&nbsp;actual&nbsp;depth&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;CNN.&nbsp;[Again,&nbsp;see&nbsp;the&nbsp;script&nbsp;playing_with_skip_connections.py&nbsp;in&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Examples&nbsp;directory&nbsp;for&nbsp;how&nbsp;to&nbsp;use&nbsp;this&nbsp;option.]&nbsp;The&nbsp;value&nbsp;of&nbsp;"depth"&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;translated&nbsp;into&nbsp;how&nbsp;many&nbsp;instances&nbsp;of&nbsp;SkipBlock&nbsp;to&nbsp;use&nbsp;for&nbsp;constructing<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;CNN.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;you&nbsp;want&nbsp;to&nbsp;use&nbsp;<a href="#DLStudio">DLStudio</a>&nbsp;for&nbsp;learning&nbsp;how&nbsp;to&nbsp;create&nbsp;your&nbsp;own<br>
+&nbsp;&nbsp;&nbsp;&nbsp;versions&nbsp;of&nbsp;SkipBlock-like&nbsp;shortcuts&nbsp;in&nbsp;a&nbsp;CNN,&nbsp;your&nbsp;starting&nbsp;point<br>
+&nbsp;&nbsp;&nbsp;&nbsp;should&nbsp;be&nbsp;the&nbsp;following&nbsp;script&nbsp;in&nbsp;the&nbsp;Examples&nbsp;directory&nbsp;of&nbsp;the&nbsp;distro:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;playing_with_skip_connections.py<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;script&nbsp;illustrates&nbsp;how&nbsp;to&nbsp;use&nbsp;the&nbsp;inner&nbsp;class&nbsp;BMEnet&nbsp;of&nbsp;the&nbsp;module<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;experimenting&nbsp;with&nbsp;skip&nbsp;connections&nbsp;in&nbsp;a&nbsp;CNN.&nbsp;As&nbsp;the&nbsp;script&nbsp;shows,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;constructor&nbsp;of&nbsp;the&nbsp;BMEnet&nbsp;class&nbsp;comes&nbsp;with&nbsp;two&nbsp;options:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;skip_connections&nbsp;and&nbsp;depth.&nbsp;&nbsp;By&nbsp;turning&nbsp;the&nbsp;first&nbsp;on&nbsp;and&nbsp;off,&nbsp;you&nbsp;can<br>
+&nbsp;&nbsp;&nbsp;&nbsp;directly&nbsp;illustrate&nbsp;in&nbsp;a&nbsp;classroom&nbsp;setting&nbsp;the&nbsp;improvement&nbsp;you&nbsp;can&nbsp;get<br>
+&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;skip&nbsp;connections.&nbsp;&nbsp;And&nbsp;by&nbsp;giving&nbsp;an&nbsp;appropriate&nbsp;value&nbsp;to&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"depth"&nbsp;option,&nbsp;you&nbsp;can&nbsp;show&nbsp;results&nbsp;for&nbsp;networks&nbsp;of&nbsp;different&nbsp;depths.<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OBJECT&nbsp;DETECTION&nbsp;AND&nbsp;LOCALIZATION:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;code&nbsp;for&nbsp;how&nbsp;to&nbsp;solve&nbsp;the&nbsp;problem&nbsp;of&nbsp;object&nbsp;detection&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;localization&nbsp;with&nbsp;a&nbsp;CNN&nbsp;is&nbsp;in&nbsp;the&nbsp;inner&nbsp;classes&nbsp;DetectAndLocalize&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;CustomDataLoading.&nbsp;&nbsp;This&nbsp;code&nbsp;was&nbsp;developed&nbsp;for&nbsp;version&nbsp;1.0.7&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;module.&nbsp;&nbsp;In&nbsp;general,&nbsp;object&nbsp;detection&nbsp;and&nbsp;localization&nbsp;problems&nbsp;are<br>
+&nbsp;&nbsp;&nbsp;&nbsp;more&nbsp;challenging&nbsp;than&nbsp;pure&nbsp;classification&nbsp;problems&nbsp;because&nbsp;solving&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;localization&nbsp;part&nbsp;requires&nbsp;regression&nbsp;for&nbsp;the&nbsp;coordinates&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bounding&nbsp;box&nbsp;that&nbsp;localize&nbsp;the&nbsp;object.&nbsp;&nbsp;If&nbsp;at&nbsp;all&nbsp;possible,&nbsp;you&nbsp;would<br>
+&nbsp;&nbsp;&nbsp;&nbsp;want&nbsp;the&nbsp;same&nbsp;CNN&nbsp;to&nbsp;provide&nbsp;answers&nbsp;to&nbsp;both&nbsp;the&nbsp;classification&nbsp;and&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;regression&nbsp;questions&nbsp;and&nbsp;do&nbsp;so&nbsp;at&nbsp;the&nbsp;same&nbsp;time.&nbsp;&nbsp;This&nbsp;calls&nbsp;for&nbsp;a&nbsp;CNN<br>
+&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;possess&nbsp;two&nbsp;different&nbsp;output&nbsp;layers,&nbsp;one&nbsp;for&nbsp;classification&nbsp;and&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;other&nbsp;for&nbsp;regression.&nbsp;&nbsp;A&nbsp;deep&nbsp;network&nbsp;that&nbsp;does&nbsp;exactly&nbsp;that&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;illustrated&nbsp;by&nbsp;the&nbsp;LOADnet&nbsp;classes&nbsp;that&nbsp;are&nbsp;defined&nbsp;in&nbsp;the&nbsp;inner&nbsp;class<br>
+&nbsp;&nbsp;&nbsp;&nbsp;DetectAndLocalize&nbsp;of&nbsp;the&nbsp;<a href="#DLStudio">DLStudio</a>&nbsp;module.&nbsp;&nbsp;[By&nbsp;the&nbsp;way,&nbsp;the&nbsp;acronym<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"LOAD"&nbsp;in&nbsp;"LOADnet"&nbsp;stands&nbsp;for&nbsp;"LOcalization&nbsp;And&nbsp;Detection".]&nbsp;Although<br>
+&nbsp;&nbsp;&nbsp;&nbsp;you&nbsp;will&nbsp;find&nbsp;three&nbsp;versions&nbsp;of&nbsp;the&nbsp;LOADnet&nbsp;class&nbsp;inside<br>
+&nbsp;&nbsp;&nbsp;&nbsp;DetectAndLocalize,&nbsp;for&nbsp;now&nbsp;only&nbsp;pay&nbsp;attention&nbsp;to&nbsp;the&nbsp;LOADnet2&nbsp;class<br>
+&nbsp;&nbsp;&nbsp;&nbsp;since&nbsp;that&nbsp;is&nbsp;the&nbsp;one&nbsp;I&nbsp;have&nbsp;worked&nbsp;with&nbsp;the&nbsp;most&nbsp;for&nbsp;creating&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;1.0.7&nbsp;distribution.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;As&nbsp;you&nbsp;would&nbsp;expect,&nbsp;training&nbsp;a&nbsp;CNN&nbsp;for&nbsp;object&nbsp;detection&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;localization&nbsp;requires&nbsp;a&nbsp;dataset&nbsp;that,&nbsp;in&nbsp;addition&nbsp;to&nbsp;the&nbsp;class&nbsp;labels<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;the&nbsp;images,&nbsp;also&nbsp;provides&nbsp;bounding-box&nbsp;annotations&nbsp;for&nbsp;the&nbsp;objects<br>
+&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;the&nbsp;images.&nbsp;Out&nbsp;of&nbsp;my&nbsp;great&nbsp;admiration&nbsp;for&nbsp;the&nbsp;CIFAR-10&nbsp;dataset&nbsp;as<br>
+&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;educational&nbsp;tool&nbsp;for&nbsp;solving&nbsp;classification&nbsp;problems,&nbsp;I&nbsp;have&nbsp;created<br>
+&nbsp;&nbsp;&nbsp;&nbsp;small-image-format&nbsp;training&nbsp;and&nbsp;testing&nbsp;datasets&nbsp;for&nbsp;illustrating&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;code&nbsp;devoted&nbsp;to&nbsp;object&nbsp;detection&nbsp;and&nbsp;localization&nbsp;in&nbsp;this&nbsp;module.&nbsp;&nbsp;The<br>
+&nbsp;&nbsp;&nbsp;&nbsp;training&nbsp;dataset&nbsp;is&nbsp;named&nbsp;PurdueShapes5-10000-train.gz&nbsp;and&nbsp;it&nbsp;consists<br>
+&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;10,000&nbsp;images,&nbsp;with&nbsp;each&nbsp;image&nbsp;of&nbsp;size&nbsp;32x32&nbsp;containing&nbsp;one&nbsp;of&nbsp;five<br>
+&nbsp;&nbsp;&nbsp;&nbsp;possible&nbsp;shapes&nbsp;---&nbsp;rectangle,&nbsp;triangle,&nbsp;disk,&nbsp;oval,&nbsp;and&nbsp;star.&nbsp;The<br>
+&nbsp;&nbsp;&nbsp;&nbsp;shape&nbsp;objects&nbsp;in&nbsp;the&nbsp;images&nbsp;are&nbsp;randomized&nbsp;with&nbsp;respect&nbsp;to&nbsp;size,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;orientation,&nbsp;and&nbsp;color.&nbsp;&nbsp;The&nbsp;testing&nbsp;dataset&nbsp;is&nbsp;named<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PurdueShapes5-1000-test.gz&nbsp;and&nbsp;it&nbsp;contains&nbsp;1000&nbsp;images&nbsp;generated&nbsp;by&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;same&nbsp;randomization&nbsp;process&nbsp;as&nbsp;used&nbsp;for&nbsp;the&nbsp;training&nbsp;dataset.&nbsp;&nbsp;You&nbsp;will<br>
+&nbsp;&nbsp;&nbsp;&nbsp;find&nbsp;these&nbsp;datasets&nbsp;in&nbsp;the&nbsp;"data"&nbsp;subdirectory&nbsp;of&nbsp;the&nbsp;"Examples"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;directory&nbsp;in&nbsp;the&nbsp;distribution.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Providing&nbsp;a&nbsp;new&nbsp;dataset&nbsp;for&nbsp;experiments&nbsp;with&nbsp;detection&nbsp;and&nbsp;localization<br>
+&nbsp;&nbsp;&nbsp;&nbsp;meant&nbsp;that&nbsp;I&nbsp;also&nbsp;needed&nbsp;to&nbsp;supply&nbsp;a&nbsp;custom&nbsp;dataloader&nbsp;for&nbsp;the&nbsp;dataset.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Toward&nbsp;that&nbsp;end,&nbsp;Version&nbsp;1.0.7&nbsp;also&nbsp;includes&nbsp;another&nbsp;inner&nbsp;class&nbsp;named<br>
+&nbsp;&nbsp;&nbsp;&nbsp;CustomDataLoading&nbsp;where&nbsp;you&nbsp;will&nbsp;my&nbsp;implementation&nbsp;of&nbsp;the&nbsp;custom<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dataloader&nbsp;for&nbsp;the&nbsp;PurdueShapes5&nbsp;dataset.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;you&nbsp;want&nbsp;to&nbsp;use&nbsp;<a href="#DLStudio">DLStudio</a>&nbsp;for&nbsp;learning&nbsp;how&nbsp;to&nbsp;write&nbsp;your&nbsp;own&nbsp;PyTorch<br>
+&nbsp;&nbsp;&nbsp;&nbsp;code&nbsp;for&nbsp;object&nbsp;detection&nbsp;and&nbsp;localization,&nbsp;your&nbsp;starting&nbsp;point&nbsp;should<br>
+&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;the&nbsp;following&nbsp;script&nbsp;in&nbsp;the&nbsp;Examples&nbsp;directory&nbsp;of&nbsp;the&nbsp;distro:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;object_detection_and_localization.py<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Execute&nbsp;the&nbsp;script&nbsp;and&nbsp;understand&nbsp;what&nbsp;functionality&nbsp;of&nbsp;the&nbsp;inner&nbsp;class<br>
+&nbsp;&nbsp;&nbsp;&nbsp;DetectAndLocalize&nbsp;it&nbsp;invokes&nbsp;for&nbsp;object&nbsp;detection&nbsp;and&nbsp;localization.<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OBJECT&nbsp;DETECTION&nbsp;AND&nbsp;LOCALIZATION&nbsp;IN&nbsp;THE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PRESENCE&nbsp;OF&nbsp;SIGNIFICANT&nbsp;NOISE:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;When&nbsp;the&nbsp;training&nbsp;data&nbsp;is&nbsp;intentionally&nbsp;corrupted&nbsp;with&nbsp;a&nbsp;high&nbsp;level&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;noise,&nbsp;it&nbsp;is&nbsp;possible&nbsp;for&nbsp;the&nbsp;output&nbsp;of&nbsp;regression&nbsp;to&nbsp;be&nbsp;a&nbsp;NaN&nbsp;(Not&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Number).&nbsp;&nbsp;Here&nbsp;is&nbsp;what&nbsp;I&nbsp;observed&nbsp;when&nbsp;I&nbsp;tested&nbsp;the&nbsp;LOADnet2&nbsp;network&nbsp;at<br>
+&nbsp;&nbsp;&nbsp;&nbsp;noise&nbsp;levels&nbsp;of&nbsp;20%,&nbsp;50%,&nbsp;and&nbsp;80%:&nbsp;At&nbsp;20%&nbsp;noise,&nbsp;both&nbsp;the&nbsp;labeling&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;regression&nbsp;accuracies&nbsp;become&nbsp;worse&nbsp;compared&nbsp;to&nbsp;the&nbsp;noiseless&nbsp;case,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;but&nbsp;they&nbsp;would&nbsp;still&nbsp;be&nbsp;usable&nbsp;depending&nbsp;on&nbsp;the&nbsp;application.&nbsp;&nbsp;For<br>
+&nbsp;&nbsp;&nbsp;&nbsp;example,&nbsp;with&nbsp;two&nbsp;epochs&nbsp;of&nbsp;training,&nbsp;the&nbsp;overall&nbsp;classification<br>
+&nbsp;&nbsp;&nbsp;&nbsp;accuracy&nbsp;decreases&nbsp;from&nbsp;91%&nbsp;to&nbsp;83%&nbsp;and&nbsp;the&nbsp;regression&nbsp;error&nbsp;increases<br>
+&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;under&nbsp;a&nbsp;pixel&nbsp;(on&nbsp;the&nbsp;average)&nbsp;to&nbsp;around&nbsp;3&nbsp;pixels.&nbsp;&nbsp;However,&nbsp;when<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;level&nbsp;of&nbsp;noise&nbsp;is&nbsp;increased&nbsp;to&nbsp;50%,&nbsp;the&nbsp;regression&nbsp;output&nbsp;is&nbsp;often<br>
+&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;NaN&nbsp;(Not&nbsp;a&nbsp;Number),&nbsp;as&nbsp;presented&nbsp;by&nbsp;'numpy.nan'&nbsp;or&nbsp;'torch.nan'.&nbsp;&nbsp;To<br>
+&nbsp;&nbsp;&nbsp;&nbsp;deal&nbsp;with&nbsp;this&nbsp;problem,&nbsp;Version&nbsp;1.1.0&nbsp;of&nbsp;the&nbsp;<a href="#DLStudio">DLStudio</a>&nbsp;module&nbsp;checks&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;output&nbsp;of&nbsp;the&nbsp;bounding-box&nbsp;regression&nbsp;before&nbsp;drawing&nbsp;the&nbsp;rectangles&nbsp;on<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;images.&nbsp;&nbsp;<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;you&nbsp;wish&nbsp;to&nbsp;experiment&nbsp;with&nbsp;detection&nbsp;and&nbsp;localization&nbsp;in&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;presence&nbsp;of&nbsp;noise,&nbsp;your&nbsp;starting&nbsp;point&nbsp;should&nbsp;be&nbsp;the&nbsp;script<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;noisy_object_detection_and_localization.py<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;the&nbsp;Examples&nbsp;directory&nbsp;of&nbsp;the&nbsp;distribution.&nbsp;&nbsp;Note&nbsp;that&nbsp;you&nbsp;would<br>
+&nbsp;&nbsp;&nbsp;&nbsp;need&nbsp;to&nbsp;download&nbsp;the&nbsp;datasets&nbsp;for&nbsp;such&nbsp;experiments&nbsp;directly&nbsp;from&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;link&nbsp;provided&nbsp;near&nbsp;the&nbsp;top&nbsp;of&nbsp;this&nbsp;documentation&nbsp;page.<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;SEMANTIC&nbsp;SEGMENTATION:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;code&nbsp;for&nbsp;how&nbsp;to&nbsp;carry&nbsp;out&nbsp;semantic&nbsp;segmentation&nbsp;is&nbsp;in&nbsp;the&nbsp;inner<br>
+&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;that&nbsp;is&nbsp;appropriately&nbsp;named&nbsp;SemanticSegmentation.&nbsp;&nbsp;At&nbsp;its<br>
+&nbsp;&nbsp;&nbsp;&nbsp;simplest,&nbsp;the&nbsp;purpose&nbsp;of&nbsp;semantic&nbsp;segmentation&nbsp;is&nbsp;to&nbsp;assign&nbsp;correct<br>
+&nbsp;&nbsp;&nbsp;&nbsp;labels&nbsp;to&nbsp;the&nbsp;different&nbsp;objects&nbsp;in&nbsp;a&nbsp;scene,&nbsp;while&nbsp;localizing&nbsp;them&nbsp;at<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;same&nbsp;time.&nbsp;&nbsp;At&nbsp;a&nbsp;more&nbsp;sophisticated&nbsp;level,&nbsp;a&nbsp;system&nbsp;that&nbsp;carries<br>
+&nbsp;&nbsp;&nbsp;&nbsp;out&nbsp;semantic&nbsp;segmentation&nbsp;should&nbsp;also&nbsp;output&nbsp;a&nbsp;symbolic&nbsp;expression&nbsp;that<br>
+&nbsp;&nbsp;&nbsp;&nbsp;reflects&nbsp;an&nbsp;understanding&nbsp;of&nbsp;the&nbsp;scene&nbsp;in&nbsp;the&nbsp;image&nbsp;that&nbsp;is&nbsp;based&nbsp;on<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;objects&nbsp;found&nbsp;in&nbsp;the&nbsp;image&nbsp;and&nbsp;their&nbsp;spatial&nbsp;relationships&nbsp;with&nbsp;one<br>
+&nbsp;&nbsp;&nbsp;&nbsp;another.&nbsp;&nbsp;The&nbsp;code&nbsp;in&nbsp;the&nbsp;new&nbsp;inner&nbsp;class&nbsp;is&nbsp;based&nbsp;on&nbsp;only&nbsp;the&nbsp;simplest<br>
+&nbsp;&nbsp;&nbsp;&nbsp;possible&nbsp;definition&nbsp;of&nbsp;what&nbsp;is&nbsp;meant&nbsp;by&nbsp;semantic&nbsp;segmentation.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;convolutional&nbsp;network&nbsp;that&nbsp;carries&nbsp;out&nbsp;semantic&nbsp;segmentation<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#DLStudio">DLStudio</a>&nbsp;is&nbsp;named&nbsp;mUnet,&nbsp;where&nbsp;the&nbsp;letter&nbsp;"m"&nbsp;is&nbsp;short&nbsp;for&nbsp;"multi",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;which,&nbsp;in&nbsp;turn,&nbsp;stands&nbsp;for&nbsp;the&nbsp;fact&nbsp;that&nbsp;mUnet&nbsp;is&nbsp;capable&nbsp;of&nbsp;segmenting<br>
+&nbsp;&nbsp;&nbsp;&nbsp;out&nbsp;multiple&nbsp;object&nbsp;simultaneously&nbsp;from&nbsp;an&nbsp;image.&nbsp;&nbsp;The&nbsp;mUnet&nbsp;network&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;based&nbsp;on&nbsp;the&nbsp;now&nbsp;famous&nbsp;Unet&nbsp;network&nbsp;that&nbsp;was&nbsp;first&nbsp;proposed&nbsp;by<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Ronneberger,&nbsp;Fischer&nbsp;and&nbsp;Brox&nbsp;in&nbsp;the&nbsp;paper&nbsp;"U-Net:&nbsp;Convolutional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Networks&nbsp;for&nbsp;Biomedical&nbsp;Image&nbsp;Segmentation".&nbsp;&nbsp;Their&nbsp;UNET&nbsp;extracts<br>
+&nbsp;&nbsp;&nbsp;&nbsp;binary&nbsp;masks&nbsp;for&nbsp;the&nbsp;cell&nbsp;pixel&nbsp;blobs&nbsp;of&nbsp;interest&nbsp;in&nbsp;biomedical&nbsp;images.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;output&nbsp;of&nbsp;UNET&nbsp;can&nbsp;therefore&nbsp;be&nbsp;treated&nbsp;as&nbsp;a&nbsp;pixel-wise&nbsp;binary<br>
+&nbsp;&nbsp;&nbsp;&nbsp;classifier&nbsp;at&nbsp;each&nbsp;pixel&nbsp;position.&nbsp;&nbsp;The&nbsp;mUnet&nbsp;class,&nbsp;on&nbsp;the&nbsp;other&nbsp;hand,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;intended&nbsp;for&nbsp;segmenting&nbsp;out&nbsp;multiple&nbsp;objects&nbsp;simultaneously&nbsp;form&nbsp;an<br>
+&nbsp;&nbsp;&nbsp;&nbsp;image.&nbsp;[A&nbsp;weaker&nbsp;reason&nbsp;for&nbsp;"m"&nbsp;in&nbsp;the&nbsp;name&nbsp;of&nbsp;the&nbsp;class&nbsp;is&nbsp;that&nbsp;it<br>
+&nbsp;&nbsp;&nbsp;&nbsp;uses&nbsp;skip&nbsp;connections&nbsp;in&nbsp;multiple&nbsp;ways&nbsp;---&nbsp;such&nbsp;connections&nbsp;are&nbsp;used<br>
+&nbsp;&nbsp;&nbsp;&nbsp;not&nbsp;only&nbsp;across&nbsp;the&nbsp;two&nbsp;arms&nbsp;of&nbsp;the&nbsp;"U",&nbsp;but&nbsp;also&nbsp;also&nbsp;along&nbsp;the&nbsp;arms.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;skip&nbsp;connections&nbsp;in&nbsp;the&nbsp;original&nbsp;Unet&nbsp;are&nbsp;only&nbsp;between&nbsp;the&nbsp;two&nbsp;arms<br>
+&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;the&nbsp;U.&nbsp;&nbsp;<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mUnet&nbsp;works&nbsp;by&nbsp;assigning&nbsp;a&nbsp;separate&nbsp;channel&nbsp;in&nbsp;the&nbsp;output&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;network&nbsp;to&nbsp;each&nbsp;different&nbsp;object&nbsp;type.&nbsp;&nbsp;After&nbsp;the&nbsp;network&nbsp;is&nbsp;trained,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;a&nbsp;given&nbsp;input&nbsp;image,&nbsp;all&nbsp;you&nbsp;have&nbsp;to&nbsp;do&nbsp;is&nbsp;examine&nbsp;the&nbsp;different<br>
+&nbsp;&nbsp;&nbsp;&nbsp;channels&nbsp;of&nbsp;the&nbsp;output&nbsp;for&nbsp;the&nbsp;presence&nbsp;or&nbsp;the&nbsp;absence&nbsp;of&nbsp;the&nbsp;objects<br>
+&nbsp;&nbsp;&nbsp;&nbsp;corresponding&nbsp;to&nbsp;the&nbsp;channel&nbsp;index.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;version&nbsp;of&nbsp;<a href="#DLStudio">DLStudio</a>&nbsp;also&nbsp;comes&nbsp;with&nbsp;a&nbsp;new&nbsp;dataset,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PurdueShapes5MultiObject,&nbsp;for&nbsp;experimenting&nbsp;with&nbsp;mUnet.&nbsp;&nbsp;Each&nbsp;image<br>
+&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;this&nbsp;dataset&nbsp;contains&nbsp;a&nbsp;random&nbsp;number&nbsp;of&nbsp;selections&nbsp;from&nbsp;five<br>
+&nbsp;&nbsp;&nbsp;&nbsp;different&nbsp;shapes,&nbsp;with&nbsp;the&nbsp;shapes&nbsp;being&nbsp;randomly&nbsp;scaled,&nbsp;oriented,&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;located&nbsp;in&nbsp;each&nbsp;image.&nbsp;&nbsp;The&nbsp;five&nbsp;different&nbsp;shapes&nbsp;are:&nbsp;rectangle,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;triangle,&nbsp;disk,&nbsp;oval,&nbsp;and&nbsp;star.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Your&nbsp;starting&nbsp;point&nbsp;for&nbsp;learning&nbsp;how&nbsp;to&nbsp;use&nbsp;the&nbsp;mUnet&nbsp;network&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;segmenting&nbsp;images&nbsp;should&nbsp;be&nbsp;the&nbsp;following&nbsp;script&nbsp;in&nbsp;the&nbsp;Examples<br>
+&nbsp;&nbsp;&nbsp;&nbsp;directory&nbsp;of&nbsp;the&nbsp;distro:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;semantic_segmentation.py<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Execute&nbsp;the&nbsp;script&nbsp;and&nbsp;understand&nbsp;how&nbsp;it&nbsp;uses&nbsp;the&nbsp;functionality&nbsp;packed<br>
+&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;the&nbsp;inner&nbsp;class&nbsp;SemanticSegmentation&nbsp;for&nbsp;segmenting&nbsp;out&nbsp;the&nbsp;objects<br>
+&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;an&nbsp;image.<br>
+&nbsp;<br>
+&nbsp;<br>
+<font size="+2" color="red">INSTALLATION:<br>
+</font>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;<a href="#DLStudio">DLStudio</a>&nbsp;class&nbsp;was&nbsp;packaged&nbsp;using&nbsp;setuptools.&nbsp;&nbsp;For<br>
+&nbsp;&nbsp;&nbsp;&nbsp;installation,&nbsp;execute&nbsp;the&nbsp;following&nbsp;command&nbsp;in&nbsp;the&nbsp;source&nbsp;directory<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(this&nbsp;is&nbsp;the&nbsp;directory&nbsp;that&nbsp;contains&nbsp;the&nbsp;setup.py&nbsp;file&nbsp;after&nbsp;you&nbsp;have<br>
+&nbsp;&nbsp;&nbsp;&nbsp;downloaded&nbsp;and&nbsp;uncompressed&nbsp;the&nbsp;package):<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sudo&nbsp;python&nbsp;setup.py&nbsp;install<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;and/or,&nbsp;for&nbsp;the&nbsp;case&nbsp;of&nbsp;Python3,&nbsp;<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sudo&nbsp;python3&nbsp;setup.py&nbsp;install<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;On&nbsp;Linux&nbsp;distributions,&nbsp;this&nbsp;will&nbsp;install&nbsp;the&nbsp;module&nbsp;file&nbsp;at&nbsp;a&nbsp;location<br>
+&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;looks&nbsp;like<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/usr/local/lib/python2.7/dist-packages/<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;and,&nbsp;for&nbsp;the&nbsp;case&nbsp;of&nbsp;Python3,&nbsp;at&nbsp;a&nbsp;location&nbsp;that&nbsp;looks&nbsp;like<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/usr/local/lib/python3.6/dist-packages/<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;you&nbsp;do&nbsp;not&nbsp;have&nbsp;root&nbsp;access,&nbsp;you&nbsp;have&nbsp;the&nbsp;option&nbsp;of&nbsp;working&nbsp;directly<br>
+&nbsp;&nbsp;&nbsp;&nbsp;off&nbsp;the&nbsp;directory&nbsp;in&nbsp;which&nbsp;you&nbsp;downloaded&nbsp;the&nbsp;software&nbsp;by&nbsp;simply<br>
+&nbsp;&nbsp;&nbsp;&nbsp;placing&nbsp;the&nbsp;following&nbsp;statements&nbsp;at&nbsp;the&nbsp;top&nbsp;of&nbsp;your&nbsp;scripts&nbsp;that&nbsp;use<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;<a href="#DLStudio">DLStudio</a>&nbsp;class:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;import&nbsp;sys<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sys.path.append(&nbsp;"pathname_to_DLStudio_directory"&nbsp;)<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;To&nbsp;uninstall&nbsp;the&nbsp;module,&nbsp;simply&nbsp;delete&nbsp;the&nbsp;source&nbsp;directory,&nbsp;locate<br>
+&nbsp;&nbsp;&nbsp;&nbsp;where&nbsp;the&nbsp;<a href="#DLStudio">DLStudio</a>&nbsp;module&nbsp;was&nbsp;installed&nbsp;with&nbsp;"locate<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#DLStudio">DLStudio</a>"&nbsp;and&nbsp;delete&nbsp;those&nbsp;files.&nbsp;&nbsp;As&nbsp;mentioned&nbsp;above,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;full&nbsp;pathname&nbsp;to&nbsp;the&nbsp;installed&nbsp;version&nbsp;is&nbsp;likely&nbsp;to&nbsp;look&nbsp;like<br>
+&nbsp;&nbsp;&nbsp;&nbsp;/usr/local/lib/python2.7/dist-packages/<a href="#DLStudio">DLStudio</a>*<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;you&nbsp;want&nbsp;to&nbsp;carry&nbsp;out&nbsp;a&nbsp;non-standard&nbsp;install&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#DLStudio">DLStudio</a>&nbsp;module,&nbsp;look&nbsp;up&nbsp;the&nbsp;on-line&nbsp;information&nbsp;on<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Disutils&nbsp;by&nbsp;pointing&nbsp;your&nbsp;browser&nbsp;to<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://docs.python.org/dist/dist.html">http://docs.python.org/dist/dist.html</a><br>
+&nbsp;<br>
+<font size="+2" color="red">USAGE:<br>
+</font>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;you&nbsp;want&nbsp;to&nbsp;specify&nbsp;a&nbsp;network&nbsp;with&nbsp;just&nbsp;a&nbsp;configuration&nbsp;string,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;your&nbsp;usage&nbsp;of&nbsp;the&nbsp;module&nbsp;is&nbsp;going&nbsp;to&nbsp;look&nbsp;like:<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;<a href="#DLStudio">DLStudio</a>&nbsp;import&nbsp;*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;convo_layers_config&nbsp;=&nbsp;"1x[128,3,3,1]-MaxPool(2)&nbsp;1x[16,5,5,1]-MaxPool(2)"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fc_layers_config&nbsp;=&nbsp;[-1,1024,10]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dls&nbsp;=&nbsp;<a href="#DLStudio">DLStudio</a>(&nbsp;&nbsp;&nbsp;dataroot&nbsp;=&nbsp;"/home/kak/ImageDatasets/CIFAR-10/",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image_size&nbsp;=&nbsp;[32,32],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;convo_layers_config&nbsp;=&nbsp;convo_layers_config,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fc_layers_config&nbsp;=&nbsp;fc_layers_config,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path_saved_model&nbsp;=&nbsp;"./saved_model",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;momentum&nbsp;=&nbsp;0.9,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;learning_rate&nbsp;=&nbsp;1e-3,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;epochs&nbsp;=&nbsp;2,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;batch_size&nbsp;=&nbsp;4,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;classes&nbsp;=&nbsp;('plane','car','bird','cat','deer',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'dog','frog','horse','ship','truck'),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use_gpu&nbsp;=&nbsp;True,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;debug_train&nbsp;=&nbsp;0,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;debug_test&nbsp;=&nbsp;1,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;configs_for_all_convo_layers&nbsp;=&nbsp;dls.parse_config_string_for_convo_layers()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;convo_layers&nbsp;=&nbsp;dls.build_convo_layers2(&nbsp;configs_for_all_convo_layers&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fc_layers&nbsp;=&nbsp;dls.build_fc_layers()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;model&nbsp;=&nbsp;dls.Net(convo_layers,&nbsp;fc_layers)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dls.show_network_summary(model)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dls.load_cifar_10_dataset()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dls.run_code_for_training(model)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dls.run_code_for_testing(model)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;or,&nbsp;if&nbsp;you&nbsp;would&nbsp;rather&nbsp;experiment&nbsp;with&nbsp;a&nbsp;drop-in&nbsp;network,&nbsp;your&nbsp;usage<br>
+&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;the&nbsp;module&nbsp;is&nbsp;going&nbsp;to&nbsp;look&nbsp;something&nbsp;like:<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dls&nbsp;=&nbsp;<a href="#DLStudio">DLStudio</a>(&nbsp;&nbsp;&nbsp;dataroot&nbsp;=&nbsp;"/home/kak/ImageDatasets/CIFAR-10/",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image_size&nbsp;=&nbsp;[32,32],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path_saved_model&nbsp;=&nbsp;"./saved_model",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;momentum&nbsp;=&nbsp;0.9,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;learning_rate&nbsp;=&nbsp;1e-3,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;epochs&nbsp;=&nbsp;2,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;batch_size&nbsp;=&nbsp;4,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;classes&nbsp;=&nbsp;('plane','car','bird','cat','deer',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'dog','frog','horse','ship','truck'),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use_gpu&nbsp;=&nbsp;True,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;debug_train&nbsp;=&nbsp;0,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;debug_test&nbsp;=&nbsp;1,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exp_seq&nbsp;=&nbsp;<a href="#DLStudio">DLStudio</a>.ExperimentsWithSequential(&nbsp;dl_studio&nbsp;=&nbsp;dls&nbsp;)&nbsp;&nbsp;&nbsp;##&nbsp;for&nbsp;your&nbsp;drop-in&nbsp;network<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exp_seq.load_cifar_10_dataset_with_augmentation()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;model&nbsp;=&nbsp;exp_seq.Net()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dls.show_network_summary(model)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exp_seq.run_code_for_training(model)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exp_seq.run_code_for_testing(model)<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;assumes&nbsp;that&nbsp;you&nbsp;copy-and-pasted&nbsp;the&nbsp;network&nbsp;you&nbsp;want&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;experiment&nbsp;with&nbsp;in&nbsp;a&nbsp;class&nbsp;like&nbsp;ExperimentsWithSequential&nbsp;that&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;included&nbsp;in&nbsp;the&nbsp;module.<br>
+&nbsp;<br>
+&nbsp;<br>
+<font size="+2" color="red">CONSTRUCTOR&nbsp;PARAMETERS:&nbsp;<br>
+</font>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;batch_size:&nbsp;&nbsp;Carries&nbsp;the&nbsp;usual&nbsp;meaning&nbsp;in&nbsp;the&nbsp;neural&nbsp;network&nbsp;context.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;classes:&nbsp;&nbsp;A&nbsp;list&nbsp;of&nbsp;the&nbsp;symbolic&nbsp;names&nbsp;for&nbsp;the&nbsp;classes.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;convo_layers_config:&nbsp;This&nbsp;parameter&nbsp;allows&nbsp;you&nbsp;to&nbsp;specify&nbsp;a&nbsp;convolutional&nbsp;network<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;a&nbsp;configuration&nbsp;string.&nbsp;&nbsp;Must&nbsp;be&nbsp;formatted&nbsp;as&nbsp;explained&nbsp;in&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;comment&nbsp;block&nbsp;associated&nbsp;with&nbsp;the&nbsp;method<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"parse_config_string_for_convo_layers()"<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dataroot:&nbsp;This&nbsp;points&nbsp;to&nbsp;where&nbsp;your&nbsp;dataset&nbsp;is&nbsp;located.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;debug_test:&nbsp;Setting&nbsp;it&nbsp;allow&nbsp;you&nbsp;to&nbsp;see&nbsp;images&nbsp;being&nbsp;used&nbsp;and&nbsp;their&nbsp;predicted<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;labels&nbsp;every&nbsp;2000&nbsp;batch-based&nbsp;iterations&nbsp;of&nbsp;testing.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;debug_train:&nbsp;Does&nbsp;the&nbsp;same&nbsp;thing&nbsp;during&nbsp;training&nbsp;that&nbsp;debug_test&nbsp;does&nbsp;during<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;testing.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;epochs:&nbsp;Specifies&nbsp;the&nbsp;number&nbsp;of&nbsp;epochs&nbsp;to&nbsp;be&nbsp;used&nbsp;for&nbsp;training&nbsp;the&nbsp;network.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fc_layers_config:&nbsp;This&nbsp;parameter&nbsp;allows&nbsp;you&nbsp;to&nbsp;specify&nbsp;the&nbsp;final<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fully-connected&nbsp;portion&nbsp;of&nbsp;the&nbsp;network&nbsp;with&nbsp;just&nbsp;a&nbsp;list&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;number&nbsp;of&nbsp;nodes&nbsp;in&nbsp;each&nbsp;layer&nbsp;of&nbsp;this&nbsp;portion.&nbsp;&nbsp;The<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;first&nbsp;entry&nbsp;in&nbsp;this&nbsp;list&nbsp;must&nbsp;be&nbsp;the&nbsp;number&nbsp;'-1',&nbsp;which<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stands&nbsp;for&nbsp;the&nbsp;fact&nbsp;that&nbsp;the&nbsp;number&nbsp;of&nbsp;nodes&nbsp;in&nbsp;the&nbsp;first<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;layer&nbsp;will&nbsp;be&nbsp;determined&nbsp;by&nbsp;the&nbsp;final&nbsp;activation&nbsp;volume&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;convolutional&nbsp;portion&nbsp;of&nbsp;the&nbsp;network.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;image_size:&nbsp;&nbsp;The&nbsp;heightxwidth&nbsp;size&nbsp;of&nbsp;the&nbsp;images&nbsp;in&nbsp;your&nbsp;dataset.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;learning_rate:&nbsp;&nbsp;Again&nbsp;carries&nbsp;the&nbsp;usual&nbsp;meaning.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;momentum:&nbsp;&nbsp;Carries&nbsp;the&nbsp;usual&nbsp;meaning&nbsp;and&nbsp;needed&nbsp;by&nbsp;the&nbsp;optimizer.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;path_saved_model:&nbsp;The&nbsp;path&nbsp;to&nbsp;where&nbsp;you&nbsp;want&nbsp;the&nbsp;trained&nbsp;model&nbsp;to&nbsp;be<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;saved&nbsp;in&nbsp;your&nbsp;disk&nbsp;so&nbsp;that&nbsp;it&nbsp;can&nbsp;be&nbsp;retrieved&nbsp;later<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;inference.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;use_gpu:&nbsp;You&nbsp;must&nbsp;set&nbsp;it&nbsp;to&nbsp;True&nbsp;if&nbsp;you&nbsp;want&nbsp;the&nbsp;GPU&nbsp;to&nbsp;be&nbsp;used&nbsp;for&nbsp;training.<br>
+&nbsp;<br>
+&nbsp;<br>
+<font size="+2" color="red">PUBLIC&nbsp;METHODS:<br>
+</font>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(1)&nbsp;&nbsp;build_convo_layers()<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;method&nbsp;creates&nbsp;the&nbsp;convolutional&nbsp;layers&nbsp;from&nbsp;the&nbsp;parameters<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;the&nbsp;configuration&nbsp;string&nbsp;that&nbsp;was&nbsp;supplied&nbsp;through&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;constructor&nbsp;option&nbsp;'convo_layers_config'.&nbsp;&nbsp;The&nbsp;output&nbsp;produced&nbsp;by<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;call&nbsp;to&nbsp;'parse_config_string_for_convo_layers()'&nbsp;is&nbsp;supplied<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;as&nbsp;the&nbsp;argument&nbsp;to&nbsp;build_convo_layers().<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(2)&nbsp;&nbsp;build_fc_layers()<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;From&nbsp;the&nbsp;list&nbsp;of&nbsp;ints&nbsp;supplied&nbsp;through&nbsp;the&nbsp;constructor&nbsp;option<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'fc_layers_config',&nbsp;this&nbsp;method&nbsp;constructs&nbsp;the&nbsp;fully-connected<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;portion&nbsp;of&nbsp;the&nbsp;overall&nbsp;network.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(3)&nbsp;&nbsp;check_a_sampling_of_images()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Displays&nbsp;the&nbsp;first&nbsp;batch_size&nbsp;number&nbsp;of&nbsp;images&nbsp;in&nbsp;your&nbsp;dataset.<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(4)&nbsp;&nbsp;display_tensor_as_image()<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;method&nbsp;will&nbsp;display&nbsp;any&nbsp;tensor&nbsp;of&nbsp;shape&nbsp;(3,H,W),&nbsp;(1,H,W),&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;just&nbsp;(H,W)&nbsp;as&nbsp;an&nbsp;image.&nbsp;If&nbsp;any&nbsp;further&nbsp;data&nbsp;normalizations&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;needed&nbsp;for&nbsp;constructing&nbsp;a&nbsp;displayable&nbsp;image,&nbsp;the&nbsp;method&nbsp;takes&nbsp;care<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;that.&nbsp;&nbsp;It&nbsp;has&nbsp;two&nbsp;input&nbsp;parameters:&nbsp;one&nbsp;for&nbsp;the&nbsp;tensor&nbsp;you&nbsp;want<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;displayed&nbsp;as&nbsp;an&nbsp;image&nbsp;and&nbsp;the&nbsp;other&nbsp;for&nbsp;a&nbsp;title&nbsp;for&nbsp;the&nbsp;image<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display.&nbsp;&nbsp;The&nbsp;latter&nbsp;parameter&nbsp;is&nbsp;default&nbsp;initialized&nbsp;to&nbsp;an&nbsp;empty<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(5)&nbsp;&nbsp;load_cifar_10_dataset()<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;is&nbsp;just&nbsp;a&nbsp;convenience&nbsp;method&nbsp;that&nbsp;calls&nbsp;on&nbsp;Torchvision's<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;functionality&nbsp;for&nbsp;creating&nbsp;a&nbsp;data&nbsp;loader.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(6)&nbsp;&nbsp;load_cifar_10_dataset_with_augmentation()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;convenience&nbsp;method&nbsp;also&nbsp;creates&nbsp;a&nbsp;data&nbsp;loader&nbsp;but&nbsp;it&nbsp;also<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;includes&nbsp;the&nbsp;syntax&nbsp;for&nbsp;data&nbsp;augmentation.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(7)&nbsp;&nbsp;parse_config_string_for_convo_layers()<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As&nbsp;mentioned&nbsp;in&nbsp;the&nbsp;Introduction,&nbsp;<a href="#DLStudio">DLStudio</a>&nbsp;module&nbsp;allows&nbsp;you&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;specify&nbsp;a&nbsp;convolutional&nbsp;network&nbsp;with&nbsp;a&nbsp;string&nbsp;provided&nbsp;the&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;obeys&nbsp;the&nbsp;formatting&nbsp;convention&nbsp;described&nbsp;in&nbsp;the&nbsp;comment&nbsp;block&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;method.&nbsp;&nbsp;This&nbsp;method&nbsp;is&nbsp;for&nbsp;parsing&nbsp;such&nbsp;a&nbsp;string.&nbsp;The&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;itself&nbsp;is&nbsp;presented&nbsp;to&nbsp;the&nbsp;module&nbsp;through&nbsp;the&nbsp;constructor&nbsp;option<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'convo_layers_config'.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(8)&nbsp;&nbsp;run_code_for_testing()<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;is&nbsp;the&nbsp;method&nbsp;runs&nbsp;the&nbsp;trained&nbsp;model&nbsp;on&nbsp;the&nbsp;test&nbsp;data.&nbsp;Its<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output&nbsp;is&nbsp;a&nbsp;confusion&nbsp;matrix&nbsp;for&nbsp;the&nbsp;classes&nbsp;and&nbsp;the&nbsp;overall<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;accuracy&nbsp;for&nbsp;each&nbsp;class.&nbsp;&nbsp;The&nbsp;method&nbsp;has&nbsp;one&nbsp;input&nbsp;parameter&nbsp;which<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;set&nbsp;to&nbsp;the&nbsp;network&nbsp;to&nbsp;be&nbsp;tested.&nbsp;&nbsp;This&nbsp;learnable&nbsp;parameters&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;network&nbsp;are&nbsp;initialized&nbsp;with&nbsp;the&nbsp;disk-stored&nbsp;version&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;trained&nbsp;model.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(9)&nbsp;&nbsp;run_code_for_training()<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;is&nbsp;the&nbsp;method&nbsp;that&nbsp;does&nbsp;all&nbsp;the&nbsp;training&nbsp;work.&nbsp;If&nbsp;a&nbsp;GPU&nbsp;was<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;detected&nbsp;at&nbsp;the&nbsp;time&nbsp;an&nbsp;instance&nbsp;of&nbsp;the&nbsp;module&nbsp;was&nbsp;created,&nbsp;this<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;method&nbsp;takes&nbsp;care&nbsp;of&nbsp;making&nbsp;the&nbsp;appropriate&nbsp;calls&nbsp;in&nbsp;order&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;transfer&nbsp;the&nbsp;tensors&nbsp;involved&nbsp;into&nbsp;the&nbsp;GPU&nbsp;memory.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(10)&nbsp;save_model()<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Writes&nbsp;the&nbsp;model&nbsp;out&nbsp;to&nbsp;the&nbsp;disk&nbsp;at&nbsp;the&nbsp;location&nbsp;specified&nbsp;by&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;constructor&nbsp;option&nbsp;'path_saved_model'.&nbsp;&nbsp;Has&nbsp;one&nbsp;input&nbsp;parameter<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;the&nbsp;model&nbsp;that&nbsp;needs&nbsp;to&nbsp;be&nbsp;written&nbsp;out.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(11)&nbsp;show_network_summary()<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Displays&nbsp;a&nbsp;print&nbsp;representation&nbsp;of&nbsp;your&nbsp;network&nbsp;and&nbsp;calls&nbsp;on&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;torchsummary&nbsp;module&nbsp;to&nbsp;print&nbsp;out&nbsp;the&nbsp;shape&nbsp;of&nbsp;the&nbsp;tensor&nbsp;at&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output&nbsp;of&nbsp;each&nbsp;layer&nbsp;in&nbsp;the&nbsp;network.&nbsp;The&nbsp;method&nbsp;has&nbsp;one&nbsp;input<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parameter&nbsp;which&nbsp;is&nbsp;set&nbsp;to&nbsp;the&nbsp;network&nbsp;whose&nbsp;summary&nbsp;you&nbsp;want&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;see.<br>
+&nbsp;<br>
+&nbsp;<br>
+<font size="+2" color="red">INNER&nbsp;CLASSES&nbsp;OF&nbsp;THE&nbsp;MODULE:<br>
+</font>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;purpose&nbsp;of&nbsp;the&nbsp;following&nbsp;two&nbsp;inner&nbsp;classes&nbsp;is&nbsp;to&nbsp;demonstrate&nbsp;how<br>
+&nbsp;&nbsp;&nbsp;&nbsp;you&nbsp;can&nbsp;create&nbsp;a&nbsp;custom&nbsp;class&nbsp;for&nbsp;your&nbsp;own&nbsp;network&nbsp;and&nbsp;test&nbsp;it&nbsp;within<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;framework&nbsp;provided&nbsp;by&nbsp;the&nbsp;<a href="#DLStudio">DLStudio</a>&nbsp;module.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(1)&nbsp;&nbsp;class&nbsp;ExperimentsWithSequential<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;class&nbsp;is&nbsp;my&nbsp;demonstration&nbsp;of&nbsp;experimenting&nbsp;with&nbsp;a&nbsp;network<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;I&nbsp;found&nbsp;on&nbsp;GitHub.&nbsp;&nbsp;I&nbsp;copy-and-pasted&nbsp;it&nbsp;in&nbsp;this&nbsp;class&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;test&nbsp;its&nbsp;capabilities.&nbsp;&nbsp;How&nbsp;to&nbsp;call&nbsp;on&nbsp;such&nbsp;a&nbsp;custom&nbsp;class&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shown&nbsp;by&nbsp;the&nbsp;following&nbsp;script&nbsp;in&nbsp;the&nbsp;Examples&nbsp;directory:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;playing_with_sequential.py<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(2)&nbsp;&nbsp;class&nbsp;ExperimentsWithCIFAR<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;is&nbsp;very&nbsp;similar&nbsp;to&nbsp;the&nbsp;previous&nbsp;inner&nbsp;class,&nbsp;but&nbsp;uses&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;common&nbsp;example&nbsp;of&nbsp;a&nbsp;network&nbsp;for&nbsp;experimenting&nbsp;with&nbsp;the&nbsp;CIFAR-10<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dataset.&nbsp;Consisting&nbsp;of&nbsp;32x32&nbsp;images,&nbsp;this&nbsp;is&nbsp;a&nbsp;great&nbsp;dataset&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;creating&nbsp;classroom&nbsp;demonstrations&nbsp;of&nbsp;convolutional&nbsp;networks.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As&nbsp;to&nbsp;how&nbsp;you&nbsp;should&nbsp;use&nbsp;this&nbsp;class&nbsp;is&nbsp;shown&nbsp;in&nbsp;the&nbsp;following<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;script<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;playing_with_cifar10.py<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;the&nbsp;Examples&nbsp;directory&nbsp;of&nbsp;the&nbsp;distribution.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(3)&nbsp;&nbsp;class&nbsp;AutogradCustomization<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;purpose&nbsp;of&nbsp;this&nbsp;class&nbsp;is&nbsp;to&nbsp;illustrate&nbsp;how&nbsp;to&nbsp;extend&nbsp;Autograd<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;additional&nbsp;functionality.&nbsp;What's&nbsp;shown&nbsp;is&nbsp;an&nbsp;implementation&nbsp;of&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;recommended&nbsp;approach&nbsp;at&nbsp;the&nbsp;following&nbsp;documentation&nbsp;page:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://pytorch.org/docs/stable/notes/extending.html<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(4)&nbsp;&nbsp;class&nbsp;SkipConnections<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;class&nbsp;is&nbsp;for&nbsp;investigating&nbsp;the&nbsp;power&nbsp;of&nbsp;skip&nbsp;connections&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;deep&nbsp;networks.&nbsp;&nbsp;Skip&nbsp;connections&nbsp;are&nbsp;used&nbsp;to&nbsp;mitigate&nbsp;a&nbsp;serious<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;problem&nbsp;associated&nbsp;with&nbsp;deep&nbsp;networks&nbsp;---&nbsp;the&nbsp;problem&nbsp;of&nbsp;vanishing<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gradients.&nbsp;&nbsp;It&nbsp;has&nbsp;been&nbsp;argued&nbsp;theoretically&nbsp;and&nbsp;demonstrated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;empirically&nbsp;that&nbsp;as&nbsp;the&nbsp;depth&nbsp;of&nbsp;a&nbsp;neural&nbsp;network&nbsp;increases,&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gradients&nbsp;of&nbsp;the&nbsp;loss&nbsp;become&nbsp;more&nbsp;and&nbsp;more&nbsp;muted&nbsp;for&nbsp;the&nbsp;early<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;layers&nbsp;in&nbsp;the&nbsp;network.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(5)&nbsp;&nbsp;class&nbsp;DetectAndLocalize<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;code&nbsp;in&nbsp;this&nbsp;inner&nbsp;class&nbsp;is&nbsp;for&nbsp;demonstrating&nbsp;how&nbsp;the&nbsp;same<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;convolutional&nbsp;network&nbsp;can&nbsp;simultaneously&nbsp;the&nbsp;twin&nbsp;problems&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;object&nbsp;detection&nbsp;and&nbsp;localization.&nbsp;&nbsp;Note&nbsp;that,&nbsp;unlike&nbsp;the&nbsp;previous<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;four&nbsp;inner&nbsp;classes,&nbsp;class&nbsp;DetectAndLocalize&nbsp;comes&nbsp;with&nbsp;its&nbsp;own<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;implementations&nbsp;for&nbsp;the&nbsp;training&nbsp;and&nbsp;testing&nbsp;methods.&nbsp;The&nbsp;main<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reason&nbsp;for&nbsp;that&nbsp;is&nbsp;that&nbsp;the&nbsp;training&nbsp;for&nbsp;detection&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;localization&nbsp;must&nbsp;use&nbsp;two&nbsp;different&nbsp;loss&nbsp;functions&nbsp;simultaneously,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;one&nbsp;for&nbsp;classification&nbsp;of&nbsp;the&nbsp;objects&nbsp;and&nbsp;the&nbsp;other&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;regression.&nbsp;The&nbsp;function&nbsp;for&nbsp;testing&nbsp;is&nbsp;also&nbsp;a&nbsp;bit&nbsp;more&nbsp;involved<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;since&nbsp;it&nbsp;must&nbsp;now&nbsp;compute&nbsp;two&nbsp;kinds&nbsp;of&nbsp;errors,&nbsp;the&nbsp;classification<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error&nbsp;and&nbsp;the&nbsp;regression&nbsp;error&nbsp;on&nbsp;the&nbsp;unseen&nbsp;data.&nbsp;Although&nbsp;you<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;will&nbsp;find&nbsp;a&nbsp;couple&nbsp;of&nbsp;different&nbsp;choices&nbsp;for&nbsp;the&nbsp;training&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;testing&nbsp;functions&nbsp;for&nbsp;detection&nbsp;and&nbsp;localization&nbsp;inside<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DetectAndLocalize,&nbsp;the&nbsp;ones&nbsp;I&nbsp;have&nbsp;worked&nbsp;with&nbsp;the&nbsp;most&nbsp;are&nbsp;those<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;are&nbsp;used&nbsp;in&nbsp;the&nbsp;following&nbsp;two&nbsp;scripts&nbsp;in&nbsp;the&nbsp;Examples<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;directory:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run_code_for_training_with_CrossEntropy_and_MSE_Losses()<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run_code_for_testing_detection_and_localization()<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(6)&nbsp;&nbsp;class&nbsp;CustomDataLoading<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;is&nbsp;a&nbsp;testbed&nbsp;for&nbsp;experimenting&nbsp;with&nbsp;a&nbsp;completely&nbsp;grounds-up<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;attempt&nbsp;at&nbsp;designing&nbsp;a&nbsp;custom&nbsp;data&nbsp;loader.&nbsp;&nbsp;Ordinarily,&nbsp;if&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;basic&nbsp;format&nbsp;of&nbsp;how&nbsp;the&nbsp;dataset&nbsp;is&nbsp;stored&nbsp;is&nbsp;similar&nbsp;to&nbsp;one&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;datasets&nbsp;that&nbsp;Torchvision&nbsp;knows&nbsp;about,&nbsp;you&nbsp;can&nbsp;go&nbsp;ahead&nbsp;and&nbsp;use<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;for&nbsp;your&nbsp;own&nbsp;dataset.&nbsp;&nbsp;At&nbsp;worst,&nbsp;you&nbsp;may&nbsp;need&nbsp;to&nbsp;carry&nbsp;out<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;some&nbsp;light&nbsp;customizations&nbsp;depending&nbsp;on&nbsp;the&nbsp;number&nbsp;of&nbsp;classes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;involved,&nbsp;etc.&nbsp;&nbsp;However,&nbsp;if&nbsp;the&nbsp;underlying&nbsp;dataset&nbsp;is&nbsp;stored&nbsp;in&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;manner&nbsp;that&nbsp;does&nbsp;not&nbsp;look&nbsp;like&nbsp;anything&nbsp;in&nbsp;Torchvision,&nbsp;you&nbsp;have<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no&nbsp;choice&nbsp;but&nbsp;to&nbsp;supply&nbsp;yourself&nbsp;all&nbsp;of&nbsp;the&nbsp;data&nbsp;loading<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;infrastructure.&nbsp;&nbsp;That&nbsp;is&nbsp;what&nbsp;this&nbsp;inner&nbsp;class&nbsp;of&nbsp;the&nbsp;<a href="#DLStudio">DLStudio</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;module&nbsp;is&nbsp;all&nbsp;about.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(7)&nbsp;&nbsp;class&nbsp;SemanticSegmentation<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;inner&nbsp;class&nbsp;is&nbsp;for&nbsp;working&nbsp;with&nbsp;the&nbsp;mUnet&nbsp;convolutional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;network&nbsp;for&nbsp;semantic&nbsp;segmentation&nbsp;of&nbsp;images.&nbsp;&nbsp;This&nbsp;network&nbsp;allows<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;you&nbsp;to&nbsp;segment&nbsp;out&nbsp;multiple&nbsp;objects&nbsp;simultaneously&nbsp;from&nbsp;an&nbsp;image.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Each&nbsp;object&nbsp;type&nbsp;is&nbsp;assigned&nbsp;a&nbsp;different&nbsp;channel&nbsp;in&nbsp;the&nbsp;output&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;network.&nbsp;&nbsp;So,&nbsp;for&nbsp;segmenting&nbsp;out&nbsp;the&nbsp;objects&nbsp;of&nbsp;a&nbsp;specified<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;in&nbsp;a&nbsp;given&nbsp;input&nbsp;image,&nbsp;all&nbsp;you&nbsp;have&nbsp;to&nbsp;do&nbsp;is&nbsp;examine&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;corresponding&nbsp;channel&nbsp;in&nbsp;the&nbsp;output.<br>
+&nbsp;<br>
+&nbsp;<br>
+<font size="+2" color="red">THE&nbsp;Examples&nbsp;DIRECTORY:<br>
+</font>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;Examples&nbsp;subdirectory&nbsp;in&nbsp;the&nbsp;distribution&nbsp;contains&nbsp;the&nbsp;following<br>
+&nbsp;&nbsp;&nbsp;&nbsp;three&nbsp;scripts:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(1)&nbsp;&nbsp;playing_with_reconfig.py<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shows&nbsp;how&nbsp;you&nbsp;can&nbsp;specify&nbsp;a&nbsp;convolution&nbsp;network&nbsp;with&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;configuration&nbsp;string.&nbsp;&nbsp;The&nbsp;<a href="#DLStudio">DLStudio</a>&nbsp;module&nbsp;parses&nbsp;the&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;constructs&nbsp;the&nbsp;network.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(2)&nbsp;&nbsp;playing_with_sequential.py<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shows&nbsp;you&nbsp;how&nbsp;you&nbsp;can&nbsp;call&nbsp;on&nbsp;a&nbsp;custom&nbsp;inner&nbsp;class&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'<a href="#DLStudio">DLStudio</a>'&nbsp;module&nbsp;that&nbsp;is&nbsp;meant&nbsp;to&nbsp;experiment&nbsp;with&nbsp;your&nbsp;own<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;network.&nbsp;&nbsp;The&nbsp;name&nbsp;of&nbsp;the&nbsp;inner&nbsp;class&nbsp;in&nbsp;this&nbsp;example&nbsp;script&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ExperimentsWithSequential<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(3)&nbsp;&nbsp;playing_with_cifar10.py<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;is&nbsp;very&nbsp;similar&nbsp;to&nbsp;the&nbsp;previous&nbsp;example&nbsp;script&nbsp;but&nbsp;is&nbsp;based<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;on&nbsp;the&nbsp;inner&nbsp;class&nbsp;ExperimentsWithCIFAR&nbsp;which&nbsp;uses&nbsp;more&nbsp;common<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;examples&nbsp;of&nbsp;networks&nbsp;for&nbsp;playing&nbsp;with&nbsp;the&nbsp;CIFAR-10&nbsp;dataset.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(4)&nbsp;&nbsp;extending_autograd.py<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;provides&nbsp;a&nbsp;demonstration&nbsp;example&nbsp;of&nbsp;the&nbsp;recommended&nbsp;approach<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;giving&nbsp;additional&nbsp;functionality&nbsp;to&nbsp;Autograd&nbsp;---&nbsp;as&nbsp;mentioned<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;the&nbsp;commented&nbsp;made&nbsp;above&nbsp;about&nbsp;the&nbsp;inner&nbsp;class<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AutogradCustomization.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(5)&nbsp;&nbsp;playing_with_skip_connections.py<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;script&nbsp;illustrates&nbsp;how&nbsp;to&nbsp;use&nbsp;the&nbsp;inner&nbsp;class&nbsp;BMEnet&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;module&nbsp;for&nbsp;experimenting&nbsp;with&nbsp;skip&nbsp;connections&nbsp;in&nbsp;a&nbsp;CNN.&nbsp;As&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;script&nbsp;shows,&nbsp;the&nbsp;constructor&nbsp;of&nbsp;the&nbsp;BMEnet&nbsp;class&nbsp;comes&nbsp;with&nbsp;two<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;options:&nbsp;skip_connections&nbsp;and&nbsp;depth.&nbsp;&nbsp;By&nbsp;turning&nbsp;the&nbsp;first&nbsp;on&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;off,&nbsp;you&nbsp;can&nbsp;directly&nbsp;illustrate&nbsp;in&nbsp;a&nbsp;classroom&nbsp;setting&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;improvement&nbsp;you&nbsp;can&nbsp;get&nbsp;with&nbsp;skip&nbsp;connections.&nbsp;&nbsp;And&nbsp;by&nbsp;giving&nbsp;an<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appropriate&nbsp;value&nbsp;to&nbsp;the&nbsp;"depth"&nbsp;option,&nbsp;you&nbsp;can&nbsp;show&nbsp;results&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;networks&nbsp;of&nbsp;different&nbsp;depths.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(6)&nbsp;&nbsp;custom_data_loading.py<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;script&nbsp;shows&nbsp;how&nbsp;to&nbsp;use&nbsp;the&nbsp;custom&nbsp;dataloader&nbsp;in&nbsp;the&nbsp;inner<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;CustomDataLoading&nbsp;of&nbsp;the&nbsp;<a href="#DLStudio">DLStudio</a>&nbsp;module.&nbsp;&nbsp;That&nbsp;custom<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dataloader&nbsp;is&nbsp;meant&nbsp;specifically&nbsp;for&nbsp;the&nbsp;PurdueShapes5&nbsp;dataset<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;is&nbsp;used&nbsp;in&nbsp;object&nbsp;detection&nbsp;and&nbsp;localization&nbsp;experiments&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#DLStudio">DLStudio</a>.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(7)&nbsp;&nbsp;object_detection_and_localization.py<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;script&nbsp;shows&nbsp;how&nbsp;you&nbsp;can&nbsp;use&nbsp;the&nbsp;functionality&nbsp;provided&nbsp;by<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;inner&nbsp;class&nbsp;DetectAndLocalize&nbsp;of&nbsp;the&nbsp;<a href="#DLStudio">DLStudio</a>&nbsp;module&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;experimenting&nbsp;with&nbsp;object&nbsp;detection&nbsp;and&nbsp;localization.&nbsp;&nbsp;Detecting<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;localizing&nbsp;(D&amp;L)&nbsp;objects&nbsp;in&nbsp;images&nbsp;is&nbsp;a&nbsp;more&nbsp;difficult&nbsp;problem<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;than&nbsp;just&nbsp;classifying&nbsp;the&nbsp;objects.&nbsp;&nbsp;D&amp;L&nbsp;requires&nbsp;that&nbsp;your&nbsp;CNN<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;two&nbsp;different&nbsp;types&nbsp;of&nbsp;inferences&nbsp;simultaneously,&nbsp;one&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;classification&nbsp;and&nbsp;the&nbsp;other&nbsp;for&nbsp;localization.&nbsp;&nbsp;For&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;localization&nbsp;part,&nbsp;the&nbsp;CNN&nbsp;must&nbsp;carry&nbsp;out&nbsp;what&nbsp;is&nbsp;known&nbsp;as<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;regression.&nbsp;What&nbsp;that&nbsp;means&nbsp;is&nbsp;that&nbsp;the&nbsp;CNN&nbsp;must&nbsp;output&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;numerical&nbsp;values&nbsp;for&nbsp;the&nbsp;bounding&nbsp;box&nbsp;that&nbsp;encloses&nbsp;the&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;was&nbsp;detected.&nbsp;&nbsp;Generating&nbsp;these&nbsp;two&nbsp;types&nbsp;of&nbsp;inferences<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;requires&nbsp;two&nbsp;different&nbsp;loss&nbsp;functions,&nbsp;one&nbsp;for&nbsp;classification&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;other&nbsp;for&nbsp;regression.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(8)&nbsp;&nbsp;noisy_object_detection_and_localization.py<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;script&nbsp;in&nbsp;the&nbsp;Examples&nbsp;directory&nbsp;is&nbsp;exactly&nbsp;the&nbsp;same&nbsp;as&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;one&nbsp;described&nbsp;above,&nbsp;the&nbsp;only&nbsp;difference&nbsp;is&nbsp;that&nbsp;it&nbsp;calls&nbsp;on&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;noise-corrupted&nbsp;training&nbsp;and&nbsp;testing&nbsp;dataset&nbsp;files.&nbsp;&nbsp;I&nbsp;thought&nbsp;it<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;would&nbsp;be&nbsp;best&nbsp;to&nbsp;create&nbsp;a&nbsp;separate&nbsp;script&nbsp;for&nbsp;studying&nbsp;the&nbsp;effects<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;noise,&nbsp;just&nbsp;to&nbsp;allow&nbsp;for&nbsp;the&nbsp;possibility&nbsp;that&nbsp;the&nbsp;noise-related<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;studies&nbsp;with&nbsp;<a href="#DLStudio">DLStudio</a>&nbsp;may&nbsp;evolve&nbsp;differently&nbsp;in&nbsp;the&nbsp;future.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(9)&nbsp;&nbsp;semantic_segmentation.py<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;script&nbsp;should&nbsp;be&nbsp;your&nbsp;starting&nbsp;point&nbsp;if&nbsp;you&nbsp;wish&nbsp;to&nbsp;learn&nbsp;how<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;use&nbsp;the&nbsp;mUnet&nbsp;neural&nbsp;network&nbsp;for&nbsp;semantic&nbsp;segmentation&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;images.&nbsp;&nbsp;As&nbsp;mentioned&nbsp;elsewhere&nbsp;in&nbsp;this&nbsp;documentation&nbsp;page,&nbsp;mUnet<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;assigns&nbsp;an&nbsp;output&nbsp;channel&nbsp;to&nbsp;each&nbsp;different&nbsp;type&nbsp;of&nbsp;object&nbsp;that<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;you&nbsp;wish&nbsp;to&nbsp;segment&nbsp;out&nbsp;from&nbsp;an&nbsp;image.&nbsp;So,&nbsp;given&nbsp;a&nbsp;test&nbsp;image&nbsp;at<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;input&nbsp;to&nbsp;the&nbsp;network,&nbsp;all&nbsp;you&nbsp;have&nbsp;to&nbsp;do&nbsp;is&nbsp;to&nbsp;examine&nbsp;each<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;channel&nbsp;at&nbsp;the&nbsp;output&nbsp;for&nbsp;segmenting&nbsp;out&nbsp;the&nbsp;objects&nbsp;that<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;correspond&nbsp;to&nbsp;that&nbsp;output&nbsp;channel.<br>
+&nbsp;<br>
+&nbsp;<br>
+<font size="+2" color="red">THE&nbsp;DATASETS&nbsp;INCLUDED&nbsp;(must&nbsp;be&nbsp;downloaded&nbsp;separately):<br>
+</font>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Download&nbsp;the&nbsp;dataset&nbsp;archive&nbsp;'datasets_for_DLStudio.tar.gz'&nbsp;from&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;link&nbsp;provided&nbsp;at&nbsp;the&nbsp;top&nbsp;of&nbsp;this&nbsp;documentation&nbsp;page&nbsp;and&nbsp;store&nbsp;it&nbsp;in&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'Example'&nbsp;directory&nbsp;of&nbsp;the&nbsp;distribution.&nbsp;&nbsp;Subsequently,&nbsp;execute&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;following&nbsp;command&nbsp;in&nbsp;the&nbsp;'Examples'&nbsp;directory:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;Examples<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tar&nbsp;xvf&nbsp;datasets_for_DLStudio.tar.gz<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;command&nbsp;will&nbsp;create&nbsp;a&nbsp;'data'&nbsp;subdirectory&nbsp;of&nbsp;'Examples'&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;deposit&nbsp;in&nbsp;the&nbsp;subdirectory&nbsp;the&nbsp;datasets&nbsp;mentioned&nbsp;below.<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OBJECT&nbsp;DETECTION&nbsp;AND&nbsp;LOCALIZATION:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Training&nbsp;a&nbsp;CNN&nbsp;for&nbsp;object&nbsp;detection&nbsp;and&nbsp;localization&nbsp;requires&nbsp;training<br>
+&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;testing&nbsp;datasets&nbsp;that&nbsp;come&nbsp;with&nbsp;bounding-box&nbsp;annotations.&nbsp;This<br>
+&nbsp;&nbsp;&nbsp;&nbsp;module&nbsp;comes&nbsp;with&nbsp;the&nbsp;PurdueShapes5&nbsp;dataset&nbsp;for&nbsp;that&nbsp;purpose.&nbsp;&nbsp;I<br>
+&nbsp;&nbsp;&nbsp;&nbsp;created&nbsp;this&nbsp;small-image-format&nbsp;dataset&nbsp;out&nbsp;of&nbsp;my&nbsp;admiration&nbsp;for&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;CIFAR-10&nbsp;dataset&nbsp;as&nbsp;an&nbsp;educational&nbsp;tool&nbsp;for&nbsp;demonstrating<br>
+&nbsp;&nbsp;&nbsp;&nbsp;classification&nbsp;networks&nbsp;in&nbsp;a&nbsp;classroom&nbsp;setting.&nbsp;You&nbsp;will&nbsp;find&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;following&nbsp;dataset&nbsp;archive&nbsp;files&nbsp;in&nbsp;the&nbsp;"data"&nbsp;subdirectory&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"Examples"&nbsp;directory&nbsp;of&nbsp;the&nbsp;distro:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(1)&nbsp;&nbsp;PurdueShapes5-10000-train.gz<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(2)&nbsp;&nbsp;PurdueShapes5-1000-test.gz<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(3)&nbsp;&nbsp;PurdueShapes5-20-train.gz<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(4)&nbsp;&nbsp;PurdueShapes5-20-test.gz&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;number&nbsp;that&nbsp;follows&nbsp;the&nbsp;main&nbsp;name&nbsp;string&nbsp;"PurdueShapes5-"&nbsp;is&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;number&nbsp;of&nbsp;images&nbsp;in&nbsp;the&nbsp;dataset.&nbsp;&nbsp;You&nbsp;will&nbsp;find&nbsp;the&nbsp;last&nbsp;two<br>
+&nbsp;&nbsp;&nbsp;&nbsp;datasets,&nbsp;with&nbsp;20&nbsp;images&nbsp;each,&nbsp;useful&nbsp;for&nbsp;debugging&nbsp;your&nbsp;logic&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;object&nbsp;detection&nbsp;and&nbsp;bounding-box&nbsp;regression.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;As&nbsp;to&nbsp;how&nbsp;the&nbsp;image&nbsp;data&nbsp;is&nbsp;stored&nbsp;in&nbsp;the&nbsp;archives,&nbsp;please&nbsp;see&nbsp;the&nbsp;main<br>
+&nbsp;&nbsp;&nbsp;&nbsp;comment&nbsp;block&nbsp;for&nbsp;the&nbsp;inner&nbsp;class&nbsp;CustomLoading&nbsp;in&nbsp;this&nbsp;file.<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OBJECT&nbsp;DETECTION&nbsp;AND&nbsp;LOCALIZATION<br>
+&nbsp;&nbsp;&nbsp;&nbsp;WITH&nbsp;NOISE-CORRUPTED&nbsp;IMAGES:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;In&nbsp;terms&nbsp;of&nbsp;how&nbsp;the&nbsp;image&nbsp;data&nbsp;is&nbsp;stored&nbsp;in&nbsp;the&nbsp;dataset&nbsp;files,&nbsp;this<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dataset&nbsp;is&nbsp;no&nbsp;different&nbsp;from&nbsp;the&nbsp;PurdueShapes5&nbsp;dataset&nbsp;described&nbsp;above.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;only&nbsp;difference&nbsp;is&nbsp;that&nbsp;we&nbsp;now&nbsp;add&nbsp;varying&nbsp;degrees&nbsp;of&nbsp;noise&nbsp;to&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;images&nbsp;to&nbsp;make&nbsp;it&nbsp;more&nbsp;challenging&nbsp;for&nbsp;both&nbsp;classification&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;regression.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;archive&nbsp;files&nbsp;you&nbsp;will&nbsp;find&nbsp;in&nbsp;the&nbsp;'data'&nbsp;subdirectory&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'Examples'&nbsp;directory&nbsp;for&nbsp;this&nbsp;dataset&nbsp;are:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(5)&nbsp;&nbsp;PurdueShapes5-10000-train-noise-20.gz<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(6)&nbsp;&nbsp;PurdueShapes5-10000-train-noise-50.gz<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(7)&nbsp;&nbsp;PurdueShapes5-10000-train-noise-80.gz<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(8)&nbsp;&nbsp;PurdueShapes5-1000-test-noise-20.gz<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(9)&nbsp;&nbsp;PurdueShapes5-1000-test-noise-50.gz<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(10)&nbsp;PurdueShapes5-1000-test-noise-80.gz<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;In&nbsp;the&nbsp;names&nbsp;of&nbsp;these&nbsp;six&nbsp;archive&nbsp;files,&nbsp;the&nbsp;numbers&nbsp;20,&nbsp;50,&nbsp;and&nbsp;80<br>
+&nbsp;&nbsp;&nbsp;&nbsp;stand&nbsp;for&nbsp;the&nbsp;level&nbsp;of&nbsp;noise&nbsp;in&nbsp;the&nbsp;images.&nbsp;&nbsp;For&nbsp;example,&nbsp;20&nbsp;means&nbsp;20%<br>
+&nbsp;&nbsp;&nbsp;&nbsp;noise.&nbsp;&nbsp;The&nbsp;percentage&nbsp;level&nbsp;indicates&nbsp;the&nbsp;fraction&nbsp;of&nbsp;the&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;range&nbsp;that&nbsp;is&nbsp;added&nbsp;as&nbsp;randomly&nbsp;generated&nbsp;noise&nbsp;to&nbsp;the&nbsp;images.&nbsp;&nbsp;The<br>
+&nbsp;&nbsp;&nbsp;&nbsp;first&nbsp;integer&nbsp;in&nbsp;the&nbsp;name&nbsp;of&nbsp;each&nbsp;archive&nbsp;carries&nbsp;the&nbsp;same&nbsp;meaning&nbsp;as<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mentioned&nbsp;above&nbsp;for&nbsp;the&nbsp;regular&nbsp;PurdueShapes5&nbsp;dataset:&nbsp;It&nbsp;stands&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;number&nbsp;of&nbsp;images&nbsp;in&nbsp;the&nbsp;dataset.<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;SEMANTIC&nbsp;SEGMENTATION:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Showing&nbsp;interesting&nbsp;results&nbsp;with&nbsp;semantic&nbsp;segmentation&nbsp;requires&nbsp;images<br>
+&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;contains&nbsp;multiple&nbsp;objects&nbsp;of&nbsp;different&nbsp;types.&nbsp;&nbsp;A&nbsp;good&nbsp;semantic<br>
+&nbsp;&nbsp;&nbsp;&nbsp;segmenter&nbsp;would&nbsp;then&nbsp;allow&nbsp;for&nbsp;each&nbsp;object&nbsp;type&nbsp;to&nbsp;be&nbsp;segmented&nbsp;out<br>
+&nbsp;&nbsp;&nbsp;&nbsp;separately&nbsp;from&nbsp;an&nbsp;image.&nbsp;&nbsp;A&nbsp;network&nbsp;that&nbsp;can&nbsp;carry&nbsp;out&nbsp;such<br>
+&nbsp;&nbsp;&nbsp;&nbsp;segmentation&nbsp;needs&nbsp;training&nbsp;and&nbsp;testing&nbsp;datasets&nbsp;in&nbsp;which&nbsp;the&nbsp;images<br>
+&nbsp;&nbsp;&nbsp;&nbsp;come&nbsp;up&nbsp;with&nbsp;multiple&nbsp;objects&nbsp;of&nbsp;different&nbsp;types&nbsp;in&nbsp;them.&nbsp;Towards&nbsp;that<br>
+&nbsp;&nbsp;&nbsp;&nbsp;end,&nbsp;I&nbsp;have&nbsp;created&nbsp;the&nbsp;following&nbsp;dataset:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(11)&nbsp;PurdueShapes5MultiObject-10000-train.gz<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(12)&nbsp;PurdueShapes5MultiObject-1000-test.gz<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(13)&nbsp;PurdueShapes5MultiObject-20-train.gz<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(14)&nbsp;PurdueShapes5MultiObject-20-test.gz<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;number&nbsp;that&nbsp;follows&nbsp;the&nbsp;main&nbsp;name&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"PurdueShapes5MultiObject-"&nbsp;is&nbsp;for&nbsp;the&nbsp;number&nbsp;of&nbsp;images&nbsp;in&nbsp;the&nbsp;dataset.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;You&nbsp;will&nbsp;find&nbsp;the&nbsp;last&nbsp;two&nbsp;datasets,&nbsp;with&nbsp;20&nbsp;images&nbsp;each,&nbsp;useful&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;debugging&nbsp;your&nbsp;logic&nbsp;for&nbsp;semantic&nbsp;segmentation.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;As&nbsp;to&nbsp;how&nbsp;the&nbsp;image&nbsp;data&nbsp;is&nbsp;stored&nbsp;in&nbsp;the&nbsp;archive&nbsp;files&nbsp;listed&nbsp;above,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;please&nbsp;see&nbsp;the&nbsp;main&nbsp;comment&nbsp;block&nbsp;for&nbsp;the&nbsp;class<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PurdueShapes5MultiObjectDataset<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;As&nbsp;explained&nbsp;there,&nbsp;in&nbsp;addition&nbsp;to&nbsp;the&nbsp;RGB&nbsp;values&nbsp;at&nbsp;the&nbsp;pixels&nbsp;that<br>
+&nbsp;&nbsp;&nbsp;&nbsp;are&nbsp;stored&nbsp;in&nbsp;the&nbsp;form&nbsp;of&nbsp;three&nbsp;separate&nbsp;lists&nbsp;called&nbsp;R,&nbsp;G,&nbsp;and&nbsp;B,&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;shapes&nbsp;themselves&nbsp;are&nbsp;stored&nbsp;in&nbsp;the&nbsp;form&nbsp;an&nbsp;array&nbsp;of&nbsp;masks,&nbsp;each&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;64x64,&nbsp;with&nbsp;each&nbsp;mask&nbsp;array&nbsp;representing&nbsp;a&nbsp;particular&nbsp;shape.&nbsp;For<br>
+&nbsp;&nbsp;&nbsp;&nbsp;illustration,&nbsp;the&nbsp;rectangle&nbsp;shape&nbsp;is&nbsp;represented&nbsp;by&nbsp;the&nbsp;first&nbsp;such<br>
+&nbsp;&nbsp;&nbsp;&nbsp;array.&nbsp;And&nbsp;so&nbsp;on.<br>
+&nbsp;<br>
+&nbsp;<br>
+<font size="+2" color="red">BUGS:<br>
+</font>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Please&nbsp;notify&nbsp;the&nbsp;author&nbsp;if&nbsp;you&nbsp;encounter&nbsp;any&nbsp;bugs.&nbsp;&nbsp;When&nbsp;sending<br>
+&nbsp;&nbsp;&nbsp;&nbsp;email,&nbsp;please&nbsp;place&nbsp;the&nbsp;string&nbsp;'<a href="#DLStudio">DLStudio</a>'&nbsp;in&nbsp;the&nbsp;subject&nbsp;line&nbsp;to&nbsp;get<br>
+&nbsp;&nbsp;&nbsp;&nbsp;past&nbsp;the&nbsp;author's&nbsp;spam&nbsp;filter.<br>
+&nbsp;<br>
+&nbsp;<br>
+<font size="+2" color="red">ABOUT&nbsp;THE&nbsp;AUTHOR:<br>
+</font>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;author,&nbsp;Avinash&nbsp;Kak,&nbsp;is&nbsp;a&nbsp;professor&nbsp;of&nbsp;Electrical&nbsp;and&nbsp;Computer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Engineering&nbsp;at&nbsp;Purdue&nbsp;University.&nbsp;&nbsp;For&nbsp;all&nbsp;issues&nbsp;related&nbsp;to&nbsp;this<br>
+&nbsp;&nbsp;&nbsp;&nbsp;module,&nbsp;contact&nbsp;the&nbsp;author&nbsp;at&nbsp;kak@purdue.edu&nbsp;If&nbsp;you&nbsp;send&nbsp;email,&nbsp;please<br>
+&nbsp;&nbsp;&nbsp;&nbsp;place&nbsp;the&nbsp;string&nbsp;"<a href="#DLStudio">DLStudio</a>"&nbsp;in&nbsp;your&nbsp;subject&nbsp;line&nbsp;to&nbsp;get&nbsp;past&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;author's&nbsp;spam&nbsp;filter.<br>
+&nbsp;<br>
+&nbsp;<br>
+<font size="+2" color="red">COPYRIGHT:<br>
+</font>&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Python&nbsp;Software&nbsp;Foundation&nbsp;License<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Copyright&nbsp;2020&nbsp;Avinash&nbsp;Kak<br>
+&nbsp;<br>
+@endofdocs</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Imported Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="torch.nn.functional.html">torch.nn.functional</a><br>
+<a href="PIL.ImageFilter.html">PIL.ImageFilter</a><br>
+<a href="copy.html">copy</a><br>
+<a href="gzip.html">gzip</a><br>
+<a href="math.html">math</a><br>
+</td><td width="25%" valign=top><a href="torch.nn.html">torch.nn</a><br>
+<a href="numpy.html">numpy</a><br>
+<a href="numbers.html">numbers</a><br>
+<a href="torch.optim.html">torch.optim</a><br>
+<a href="os.html">os</a><br>
+</td><td width="25%" valign=top><a href="pickle.html">pickle</a><br>
+<a href="matplotlib.pyplot.html">matplotlib.pyplot</a><br>
+<a href="pymsgbox.html">pymsgbox</a><br>
+<a href="random.html">random</a><br>
+<a href="re.html">re</a><br>
+</td><td width="25%" valign=top><a href="sys.html">sys</a><br>
+<a href="torch.html">torch</a><br>
+<a href="torchvision.html">torchvision</a><br>
+<a href="torchvision.transforms.html">torchvision.transforms</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="__builtin__.html#object">__builtin__.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="DLStudio.html#DLStudio">DLStudio</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="DLStudio">class <strong>DLStudio</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="DLStudio-__init__"><strong>__init__</strong></a>(self, *args, **kwargs)</dt></dl>
+
+<dl><dt><a name="DLStudio-build_convo_layers"><strong>build_convo_layers</strong></a>(self, configs_for_all_convo_layers)</dt></dl>
+
+<dl><dt><a name="DLStudio-build_fc_layers"><strong>build_fc_layers</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="DLStudio-check_a_sampling_of_images"><strong>check_a_sampling_of_images</strong></a>(self)</dt><dd><tt>Displays&nbsp;the&nbsp;first&nbsp;batch_size&nbsp;number&nbsp;of&nbsp;images&nbsp;in&nbsp;your&nbsp;dataset.</tt></dd></dl>
+
+<dl><dt><a name="DLStudio-display_tensor_as_image"><strong>display_tensor_as_image</strong></a>(self, tensor, title<font color="#909090">=''</font>)</dt><dd><tt>This&nbsp;method&nbsp;converts&nbsp;the&nbsp;argument&nbsp;tensor&nbsp;into&nbsp;a&nbsp;photo&nbsp;image&nbsp;that&nbsp;you&nbsp;can&nbsp;display<br>
+in&nbsp;your&nbsp;terminal&nbsp;screen.&nbsp;It&nbsp;can&nbsp;convert&nbsp;tensors&nbsp;of&nbsp;three&nbsp;different&nbsp;shapes<br>
+into&nbsp;images:&nbsp;(3,H,W),&nbsp;(1,H,W),&nbsp;and&nbsp;(H,W),&nbsp;where&nbsp;H,&nbsp;for&nbsp;height,&nbsp;stands&nbsp;for&nbsp;the<br>
+number&nbsp;of&nbsp;pixels&nbsp;in&nbsp;the&nbsp;vertical&nbsp;direction&nbsp;and&nbsp;W,&nbsp;for&nbsp;width,&nbsp;for&nbsp;the&nbsp;same<br>
+along&nbsp;the&nbsp;horizontal&nbsp;direction.&nbsp;&nbsp;When&nbsp;the&nbsp;first&nbsp;element&nbsp;of&nbsp;the&nbsp;shape&nbsp;is&nbsp;3,<br>
+that&nbsp;means&nbsp;that&nbsp;the&nbsp;tensor&nbsp;represents&nbsp;a&nbsp;color&nbsp;image&nbsp;in&nbsp;which&nbsp;each&nbsp;pixel&nbsp;in<br>
+the&nbsp;(H,W)&nbsp;plane&nbsp;has&nbsp;three&nbsp;values&nbsp;for&nbsp;the&nbsp;three&nbsp;color&nbsp;channels.&nbsp;&nbsp;On&nbsp;the&nbsp;other<br>
+hand,&nbsp;when&nbsp;the&nbsp;first&nbsp;element&nbsp;is&nbsp;1,&nbsp;that&nbsp;stands&nbsp;for&nbsp;a&nbsp;tensor&nbsp;that&nbsp;will&nbsp;be<br>
+shown&nbsp;as&nbsp;a&nbsp;grayscale&nbsp;image.&nbsp;&nbsp;And&nbsp;when&nbsp;the&nbsp;shape&nbsp;is&nbsp;just&nbsp;(H,W),&nbsp;that&nbsp;is<br>
+automatically&nbsp;taken&nbsp;to&nbsp;be&nbsp;for&nbsp;a&nbsp;grayscale&nbsp;image.</tt></dd></dl>
+
+<dl><dt><a name="DLStudio-imshow"><strong>imshow</strong></a>(self, img)</dt><dd><tt>called&nbsp;by&nbsp;<a href="#DLStudio-display_tensor_as_image">display_tensor_as_image</a>()&nbsp;for&nbsp;displaying&nbsp;the&nbsp;image</tt></dd></dl>
+
+<dl><dt><a name="DLStudio-load_cifar_10_dataset"><strong>load_cifar_10_dataset</strong></a>(self)</dt><dd><tt>We&nbsp;make&nbsp;sure&nbsp;that&nbsp;the&nbsp;transformation&nbsp;applied&nbsp;to&nbsp;the&nbsp;image&nbsp;end&nbsp;the&nbsp;images&nbsp;being&nbsp;normalized.<br>
+Consider&nbsp;this&nbsp;call&nbsp;to&nbsp;normalize:&nbsp;"Normalize((0.5,&nbsp;0.5,&nbsp;0.5),&nbsp;(0.5,&nbsp;0.5,&nbsp;0.5))".&nbsp;&nbsp;The&nbsp;three<br>
+numbers&nbsp;in&nbsp;the&nbsp;first&nbsp;tuple&nbsp;affect&nbsp;the&nbsp;means&nbsp;in&nbsp;the&nbsp;three&nbsp;color&nbsp;channels&nbsp;and&nbsp;the&nbsp;three&nbsp;<br>
+numbers&nbsp;in&nbsp;the&nbsp;second&nbsp;tuple&nbsp;affect&nbsp;the&nbsp;standard&nbsp;deviations.&nbsp;&nbsp;In&nbsp;this&nbsp;case,&nbsp;we&nbsp;want&nbsp;the&nbsp;<br>
+image&nbsp;value&nbsp;in&nbsp;each&nbsp;channel&nbsp;to&nbsp;be&nbsp;changed&nbsp;to:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image_channel_val&nbsp;=&nbsp;(image_channel_val&nbsp;-&nbsp;mean)&nbsp;/&nbsp;std<br>
+&nbsp;<br>
+So&nbsp;with&nbsp;mean&nbsp;and&nbsp;std&nbsp;both&nbsp;set&nbsp;0.5&nbsp;for&nbsp;all&nbsp;three&nbsp;channels,&nbsp;if&nbsp;the&nbsp;image&nbsp;tensor&nbsp;originally&nbsp;<br>
+was&nbsp;between&nbsp;0&nbsp;and&nbsp;1.0,&nbsp;after&nbsp;this&nbsp;normalization,&nbsp;the&nbsp;tensor&nbsp;will&nbsp;be&nbsp;between&nbsp;-1.0&nbsp;and&nbsp;+1.0.&nbsp;<br>
+If&nbsp;needed&nbsp;we&nbsp;can&nbsp;do&nbsp;inverse&nbsp;normalization&nbsp;&nbsp;by<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image_channel_val&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;(image_channel_val&nbsp;*&nbsp;std)&nbsp;+&nbsp;mean</tt></dd></dl>
+
+<dl><dt><a name="DLStudio-load_cifar_10_dataset_with_augmentation"><strong>load_cifar_10_dataset_with_augmentation</strong></a>(self)</dt><dd><tt>In&nbsp;general,&nbsp;we&nbsp;want&nbsp;to&nbsp;do&nbsp;data&nbsp;augmentation&nbsp;for&nbsp;training:</tt></dd></dl>
+
+<dl><dt><a name="DLStudio-parse_config_string_for_convo_layers"><strong>parse_config_string_for_convo_layers</strong></a>(self)</dt><dd><tt>Each&nbsp;collection&nbsp;of&nbsp;'n'&nbsp;otherwise&nbsp;identical&nbsp;layers&nbsp;in&nbsp;a&nbsp;convolutional&nbsp;network&nbsp;is&nbsp;<br>
+specified&nbsp;by&nbsp;a&nbsp;string&nbsp;that&nbsp;looks&nbsp;like:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"nx[a,b,c,d]-MaxPool(k)"<br>
+where&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;num&nbsp;of&nbsp;this&nbsp;type&nbsp;of&nbsp;convo&nbsp;layer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;number&nbsp;of&nbsp;out_channels&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[in_channels&nbsp;determined&nbsp;by&nbsp;prev&nbsp;layer]&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b,c&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;kernel&nbsp;for&nbsp;this&nbsp;layer&nbsp;is&nbsp;of&nbsp;size&nbsp;(b,c)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[b&nbsp;along&nbsp;height,&nbsp;c&nbsp;along&nbsp;width]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;stride&nbsp;for&nbsp;convolutions<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;k&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;maxpooling&nbsp;over&nbsp;kxk&nbsp;patches&nbsp;with&nbsp;stride&nbsp;of&nbsp;k<br>
+&nbsp;<br>
+Example:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"n1x[a1,b1,c1,d1]-MaxPool(k1)&nbsp;&nbsp;n2x[a2,b2,c2,d2]-MaxPool(k2)"</tt></dd></dl>
+
+<dl><dt><a name="DLStudio-plot_loss"><strong>plot_loss</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="DLStudio-run_code_for_testing"><strong>run_code_for_testing</strong></a>(self, net)</dt></dl>
+
+<dl><dt><a name="DLStudio-run_code_for_training"><strong>run_code_for_training</strong></a>(self, net)</dt></dl>
+
+<dl><dt><a name="DLStudio-save_model"><strong>save_model</strong></a>(self, model)</dt><dd><tt>Save&nbsp;the&nbsp;trained&nbsp;model&nbsp;to&nbsp;a&nbsp;disk&nbsp;file</tt></dd></dl>
+
+<dl><dt><a name="DLStudio-show_network_summary"><strong>show_network_summary</strong></a>(self, net)</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>AutogradCustomization</strong> = &lt;class 'DLStudio.AutogradCustomization'&gt;<dd><tt>This&nbsp;class&nbsp;illustrates&nbsp;how&nbsp;you&nbsp;can&nbsp;add&nbsp;additional&nbsp;functionality&nbsp;of&nbsp;Autograd&nbsp;by&nbsp;<br>
+following&nbsp;the&nbsp;instructions&nbsp;posted&nbsp;at<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://pytorch.org/docs/stable/notes/extending.html</tt></dl>
+
+<dl><dt><strong>CustomDataLoading</strong> = &lt;class 'DLStudio.CustomDataLoading'&gt;<dd><tt>This&nbsp;is&nbsp;a&nbsp;testbed&nbsp;for&nbsp;experimenting&nbsp;with&nbsp;a&nbsp;completely&nbsp;grounds-up&nbsp;attempt&nbsp;at<br>
+designing&nbsp;a&nbsp;custom&nbsp;data&nbsp;loader.&nbsp;&nbsp;Ordinarily,&nbsp;if&nbsp;the&nbsp;basic&nbsp;format&nbsp;of&nbsp;how&nbsp;the<br>
+dataset&nbsp;is&nbsp;stored&nbsp;is&nbsp;similar&nbsp;to&nbsp;one&nbsp;of&nbsp;the&nbsp;datasets&nbsp;that&nbsp;the&nbsp;Torchvision<br>
+module&nbsp;knows&nbsp;about,&nbsp;you&nbsp;can&nbsp;go&nbsp;ahead&nbsp;and&nbsp;use&nbsp;that&nbsp;for&nbsp;your&nbsp;own&nbsp;dataset.&nbsp;&nbsp;At<br>
+worst,&nbsp;you&nbsp;may&nbsp;need&nbsp;to&nbsp;carry&nbsp;out&nbsp;some&nbsp;light&nbsp;customizations&nbsp;depending&nbsp;on&nbsp;the<br>
+number&nbsp;of&nbsp;classes&nbsp;involved,&nbsp;etc.<br>
+&nbsp;<br>
+However,&nbsp;if&nbsp;the&nbsp;underlying&nbsp;dataset&nbsp;is&nbsp;stored&nbsp;in&nbsp;a&nbsp;manner&nbsp;that&nbsp;does&nbsp;not&nbsp;look<br>
+like&nbsp;anything&nbsp;in&nbsp;Torchvision,&nbsp;you&nbsp;have&nbsp;no&nbsp;choice&nbsp;but&nbsp;to&nbsp;supply&nbsp;yourself&nbsp;all<br>
+of&nbsp;the&nbsp;data&nbsp;loading&nbsp;infrastructure.&nbsp;&nbsp;That&nbsp;is&nbsp;what&nbsp;this&nbsp;inner&nbsp;class&nbsp;of&nbsp;the&nbsp;<br>
+<a href="#DLStudio">DLStudio</a>&nbsp;module&nbsp;is&nbsp;all&nbsp;about.<br>
+&nbsp;<br>
+The&nbsp;custom&nbsp;data&nbsp;loading&nbsp;exercise&nbsp;here&nbsp;is&nbsp;related&nbsp;to&nbsp;a&nbsp;dataset&nbsp;called<br>
+PurdueShapes5&nbsp;that&nbsp;contains&nbsp;32x32&nbsp;images&nbsp;of&nbsp;binary&nbsp;shapes&nbsp;belonging&nbsp;to&nbsp;the<br>
+following&nbsp;five&nbsp;classes:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.&nbsp;&nbsp;rectangle<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.&nbsp;&nbsp;triangle<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.&nbsp;&nbsp;disk<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.&nbsp;&nbsp;oval<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.&nbsp;&nbsp;star<br>
+&nbsp;<br>
+The&nbsp;dataset&nbsp;was&nbsp;generated&nbsp;by&nbsp;randomizing&nbsp;the&nbsp;sizes&nbsp;and&nbsp;the&nbsp;orientations<br>
+of&nbsp;these&nbsp;five&nbsp;patterns.&nbsp;&nbsp;Since&nbsp;the&nbsp;patterns&nbsp;are&nbsp;rotated&nbsp;with&nbsp;a&nbsp;very&nbsp;simple<br>
+non-interpolating&nbsp;transform,&nbsp;just&nbsp;the&nbsp;act&nbsp;of&nbsp;random&nbsp;rotations&nbsp;can&nbsp;introduce<br>
+boundary&nbsp;and&nbsp;even&nbsp;interior&nbsp;noise&nbsp;in&nbsp;the&nbsp;patterns.<br>
+&nbsp;<br>
+Each&nbsp;32x32&nbsp;image&nbsp;is&nbsp;stored&nbsp;in&nbsp;the&nbsp;dataset&nbsp;as&nbsp;the&nbsp;following&nbsp;list:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[R,&nbsp;G,&nbsp;B,&nbsp;Bbox,&nbsp;Label]<br>
+where<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;is&nbsp;a&nbsp;1024&nbsp;element&nbsp;list&nbsp;of&nbsp;the&nbsp;values&nbsp;for&nbsp;the&nbsp;red&nbsp;component<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;the&nbsp;color&nbsp;at&nbsp;all&nbsp;the&nbsp;pixels<br>
+&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;the&nbsp;same&nbsp;as&nbsp;above&nbsp;but&nbsp;for&nbsp;the&nbsp;green&nbsp;component&nbsp;of&nbsp;the&nbsp;color<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;G&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;the&nbsp;same&nbsp;as&nbsp;above&nbsp;but&nbsp;for&nbsp;the&nbsp;blue&nbsp;component&nbsp;of&nbsp;the&nbsp;color<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bbox&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;a&nbsp;list&nbsp;like&nbsp;[x1,y1,x2,y2]&nbsp;that&nbsp;defines&nbsp;the&nbsp;bounding&nbsp;box&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;the&nbsp;object&nbsp;in&nbsp;the&nbsp;image<br>
+&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Label&nbsp;:&nbsp;&nbsp;&nbsp;the&nbsp;shape&nbsp;of&nbsp;the&nbsp;object<br>
+&nbsp;<br>
+I&nbsp;serialize&nbsp;the&nbsp;dataset&nbsp;with&nbsp;Python's&nbsp;pickle&nbsp;module&nbsp;and&nbsp;then&nbsp;compress&nbsp;it&nbsp;with&nbsp;<br>
+the&nbsp;gzip&nbsp;module.&nbsp;&nbsp;<br>
+&nbsp;<br>
+You&nbsp;will&nbsp;find&nbsp;the&nbsp;following&nbsp;dataset&nbsp;directories&nbsp;in&nbsp;the&nbsp;"data"&nbsp;subdirectory<br>
+of&nbsp;Examples&nbsp;in&nbsp;the&nbsp;<a href="#DLStudio">DLStudio</a>&nbsp;distro:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PurdueShapes5-10000-train.gz<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PurdueShapes5-1000-test.gz<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PurdueShapes5-20-train.gz<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PurdueShapes5-20-test.gz&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;<br>
+The&nbsp;number&nbsp;that&nbsp;follows&nbsp;the&nbsp;main&nbsp;name&nbsp;string&nbsp;"PurdueShapes5-"&nbsp;is&nbsp;for&nbsp;the&nbsp;<br>
+number&nbsp;of&nbsp;images&nbsp;in&nbsp;the&nbsp;dataset.&nbsp;&nbsp;<br>
+&nbsp;<br>
+You&nbsp;will&nbsp;find&nbsp;the&nbsp;last&nbsp;two&nbsp;datasets,&nbsp;with&nbsp;20&nbsp;images&nbsp;each,&nbsp;useful&nbsp;for&nbsp;debugging<br>
+your&nbsp;logic&nbsp;for&nbsp;object&nbsp;detection&nbsp;and&nbsp;bounding-box&nbsp;regression.</tt></dl>
+
+<dl><dt><strong>DetectAndLocalize</strong> = &lt;class 'DLStudio.DetectAndLocalize'&gt;<dd><tt>The&nbsp;purpose&nbsp;of&nbsp;this&nbsp;inner&nbsp;class&nbsp;is&nbsp;to&nbsp;focus&nbsp;on&nbsp;object&nbsp;detection&nbsp;in&nbsp;images&nbsp;---&nbsp;as<br>
+opposed&nbsp;to&nbsp;image&nbsp;classification.&nbsp;&nbsp;Most&nbsp;people&nbsp;would&nbsp;say&nbsp;that&nbsp;object&nbsp;detection<br>
+is&nbsp;a&nbsp;more&nbsp;challenging&nbsp;problem&nbsp;than&nbsp;image&nbsp;classification&nbsp;because,&nbsp;in&nbsp;general,<br>
+the&nbsp;former&nbsp;also&nbsp;requires&nbsp;localization.&nbsp;&nbsp;The&nbsp;simplest&nbsp;interpretation&nbsp;of&nbsp;what<br>
+is&nbsp;meant&nbsp;by&nbsp;localization&nbsp;is&nbsp;that&nbsp;the&nbsp;code&nbsp;that&nbsp;carries&nbsp;out&nbsp;object&nbsp;detection<br>
+must&nbsp;also&nbsp;output&nbsp;a&nbsp;bounding-box&nbsp;rectangle&nbsp;for&nbsp;the&nbsp;object&nbsp;that&nbsp;was&nbsp;detected.<br>
+&nbsp;<br>
+You&nbsp;will&nbsp;find&nbsp;in&nbsp;this&nbsp;inner&nbsp;class&nbsp;some&nbsp;examples&nbsp;of&nbsp;LOADnet&nbsp;classes&nbsp;meant<br>
+for&nbsp;solving&nbsp;the&nbsp;object&nbsp;detection&nbsp;and&nbsp;localization&nbsp;problem.&nbsp;&nbsp;The&nbsp;acronym<br>
+"LOAD"&nbsp;in&nbsp;"LOADnet"&nbsp;stands&nbsp;for<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"LOcalization&nbsp;And&nbsp;Detection"<br>
+&nbsp;<br>
+The&nbsp;different&nbsp;network&nbsp;examples&nbsp;included&nbsp;here&nbsp;are&nbsp;LOADnet1,&nbsp;LOADnet2,&nbsp;and<br>
+LOADnet3.&nbsp;&nbsp;For&nbsp;now,&nbsp;only&nbsp;pay&nbsp;attention&nbsp;to&nbsp;LOADnet2&nbsp;since&nbsp;that's&nbsp;the&nbsp;class&nbsp;I<br>
+have&nbsp;worked&nbsp;with&nbsp;the&nbsp;most&nbsp;for&nbsp;the&nbsp;1.0.7&nbsp;distribution.</tt></dl>
+
+<dl><dt><strong>ExperimentsWithCIFAR</strong> = &lt;class 'DLStudio.ExperimentsWithCIFAR'&gt;</dl>
+
+<dl><dt><strong>ExperimentsWithSequential</strong> = &lt;class 'DLStudio.ExperimentsWithSequential'&gt;<dd><tt>Demonstrates&nbsp;how&nbsp;to&nbsp;use&nbsp;the&nbsp;torch.nn.Sequential&nbsp;container&nbsp;class</tt></dl>
+
+<dl><dt><strong>Net</strong> = &lt;class 'DLStudio.Net'&gt;</dl>
+
+<dl><dt><strong>SemanticSegmentation</strong> = &lt;class 'DLStudio.SemanticSegmentation'&gt;<dd><tt>The&nbsp;purpose&nbsp;of&nbsp;this&nbsp;inner&nbsp;class&nbsp;is&nbsp;to&nbsp;be&nbsp;able&nbsp;to&nbsp;use&nbsp;the&nbsp;<a href="#DLStudio">DLStudio</a>&nbsp;module&nbsp;for<br>
+experiments&nbsp;with&nbsp;semantic&nbsp;segmentation.&nbsp;&nbsp;At&nbsp;its&nbsp;simplest&nbsp;level,&nbsp;the<br>
+purpose&nbsp;of&nbsp;semantic&nbsp;segmentation&nbsp;is&nbsp;to&nbsp;assign&nbsp;correct&nbsp;labels&nbsp;to&nbsp;the<br>
+different&nbsp;objects&nbsp;in&nbsp;a&nbsp;scene,&nbsp;while&nbsp;localizing&nbsp;them&nbsp;at&nbsp;the&nbsp;same&nbsp;time.&nbsp;&nbsp;At<br>
+a&nbsp;more&nbsp;sophisticated&nbsp;level,&nbsp;a&nbsp;system&nbsp;that&nbsp;carries&nbsp;out&nbsp;semantic<br>
+segmentation&nbsp;should&nbsp;also&nbsp;output&nbsp;a&nbsp;symbolic&nbsp;expression&nbsp;based&nbsp;on&nbsp;the&nbsp;objects<br>
+found&nbsp;in&nbsp;the&nbsp;image&nbsp;and&nbsp;their&nbsp;spatial&nbsp;relationships&nbsp;with&nbsp;one&nbsp;another.<br>
+&nbsp;<br>
+The&nbsp;workhorse&nbsp;of&nbsp;this&nbsp;inner&nbsp;class&nbsp;is&nbsp;the&nbsp;mUnet&nbsp;network&nbsp;that&nbsp;is&nbsp;based<br>
+on&nbsp;the&nbsp;UNET&nbsp;network&nbsp;that&nbsp;was&nbsp;first&nbsp;proposed&nbsp;by&nbsp;Ronneberger,&nbsp;Fischer&nbsp;and<br>
+Brox&nbsp;in&nbsp;the&nbsp;paper&nbsp;"U-Net:&nbsp;Convolutional&nbsp;Networks&nbsp;for&nbsp;Biomedical&nbsp;Image<br>
+Segmentation".&nbsp;&nbsp;Their&nbsp;Unet&nbsp;extracts&nbsp;binary&nbsp;masks&nbsp;for&nbsp;the&nbsp;cell&nbsp;pixel&nbsp;blobs<br>
+of&nbsp;interest&nbsp;in&nbsp;biomedical&nbsp;images.&nbsp;&nbsp;The&nbsp;output&nbsp;of&nbsp;their&nbsp;Unet&nbsp;can<br>
+therefore&nbsp;be&nbsp;treated&nbsp;as&nbsp;a&nbsp;pixel-wise&nbsp;binary&nbsp;classifier&nbsp;at&nbsp;each&nbsp;pixel<br>
+position.&nbsp;&nbsp;The&nbsp;mUnet&nbsp;class,&nbsp;on&nbsp;the&nbsp;other&nbsp;hand,&nbsp;is&nbsp;intended&nbsp;for<br>
+segmenting&nbsp;out&nbsp;multiple&nbsp;objects&nbsp;simultaneously&nbsp;form&nbsp;an&nbsp;image.&nbsp;[A&nbsp;weaker<br>
+reason&nbsp;for&nbsp;"Multi"&nbsp;in&nbsp;the&nbsp;name&nbsp;of&nbsp;the&nbsp;class&nbsp;is&nbsp;that&nbsp;it&nbsp;uses&nbsp;skip<br>
+connections&nbsp;not&nbsp;only&nbsp;across&nbsp;the&nbsp;two&nbsp;arms&nbsp;of&nbsp;the&nbsp;"U",&nbsp;but&nbsp;also&nbsp;also&nbsp;along<br>
+the&nbsp;arms.&nbsp;&nbsp;The&nbsp;skip&nbsp;connections&nbsp;in&nbsp;the&nbsp;original&nbsp;Unet&nbsp;are&nbsp;only&nbsp;between&nbsp;the<br>
+two&nbsp;arms&nbsp;of&nbsp;the&nbsp;U.&nbsp;&nbsp;In&nbsp;mUnet,&nbsp;each&nbsp;object&nbsp;type&nbsp;is&nbsp;assigned&nbsp;a&nbsp;separate<br>
+channel&nbsp;in&nbsp;the&nbsp;output&nbsp;of&nbsp;the&nbsp;network.<br>
+&nbsp;<br>
+This&nbsp;version&nbsp;of&nbsp;<a href="#DLStudio">DLStudio</a>&nbsp;also&nbsp;comes&nbsp;with&nbsp;a&nbsp;new&nbsp;dataset,<br>
+PurdueShapes5MultiObject,&nbsp;for&nbsp;experimenting&nbsp;with&nbsp;mUnet.&nbsp;&nbsp;Each&nbsp;image&nbsp;in<br>
+this&nbsp;dataset&nbsp;contains&nbsp;a&nbsp;random&nbsp;number&nbsp;of&nbsp;selections&nbsp;from&nbsp;five&nbsp;different<br>
+shapes,&nbsp;with&nbsp;the&nbsp;shapes&nbsp;being&nbsp;randomly&nbsp;scaled,&nbsp;oriented,&nbsp;and&nbsp;located&nbsp;in<br>
+each&nbsp;image.&nbsp;&nbsp;The&nbsp;five&nbsp;different&nbsp;shapes&nbsp;are:&nbsp;rectangle,&nbsp;triangle,&nbsp;disk,<br>
+oval,&nbsp;and&nbsp;star.</tt></dl>
+
+<dl><dt><strong>SkipConnections</strong> = &lt;class 'DLStudio.SkipConnections'&gt;<dd><tt>This&nbsp;educational&nbsp;class&nbsp;is&nbsp;meant&nbsp;for&nbsp;illustrating&nbsp;the&nbsp;concepts&nbsp;related&nbsp;to&nbsp;the&nbsp;<br>
+use&nbsp;of&nbsp;skip&nbsp;connections&nbsp;in&nbsp;neural&nbsp;network.&nbsp;&nbsp;It&nbsp;is&nbsp;now&nbsp;well&nbsp;known&nbsp;that&nbsp;deep<br>
+networks&nbsp;are&nbsp;difficult&nbsp;to&nbsp;train&nbsp;because&nbsp;of&nbsp;the&nbsp;vanishing&nbsp;gradients&nbsp;problem.<br>
+What&nbsp;that&nbsp;means&nbsp;is&nbsp;that&nbsp;as&nbsp;the&nbsp;depth&nbsp;of&nbsp;network&nbsp;increases,&nbsp;the&nbsp;loss&nbsp;gradients<br>
+calculated&nbsp;for&nbsp;the&nbsp;early&nbsp;layers&nbsp;become&nbsp;more&nbsp;and&nbsp;more&nbsp;muted,&nbsp;which&nbsp;suppresses<br>
+the&nbsp;learning&nbsp;of&nbsp;the&nbsp;parameters&nbsp;in&nbsp;those&nbsp;layers.&nbsp;&nbsp;An&nbsp;important&nbsp;mitigation<br>
+strategy&nbsp;for&nbsp;addressing&nbsp;this&nbsp;problem&nbsp;consists&nbsp;of&nbsp;creating&nbsp;a&nbsp;CNN&nbsp;using&nbsp;blocks<br>
+with&nbsp;skip&nbsp;connections.<br>
+&nbsp;<br>
+With&nbsp;the&nbsp;code&nbsp;shown&nbsp;in&nbsp;this&nbsp;inner&nbsp;class&nbsp;of&nbsp;the&nbsp;module,&nbsp;you&nbsp;can&nbsp;now&nbsp;experiment<br>
+with&nbsp;skip&nbsp;connections&nbsp;in&nbsp;a&nbsp;CNN&nbsp;to&nbsp;see&nbsp;how&nbsp;a&nbsp;deep&nbsp;network&nbsp;with&nbsp;this&nbsp;feature<br>
+might&nbsp;improve&nbsp;the&nbsp;classification&nbsp;results.&nbsp;&nbsp;As&nbsp;you&nbsp;will&nbsp;see&nbsp;in&nbsp;the&nbsp;code&nbsp;shown<br>
+below,&nbsp;the&nbsp;network&nbsp;that&nbsp;allows&nbsp;you&nbsp;to&nbsp;construct&nbsp;a&nbsp;CNN&nbsp;with&nbsp;skip&nbsp;connections<br>
+is&nbsp;named&nbsp;BMEnet.&nbsp;&nbsp;As&nbsp;shown&nbsp;in&nbsp;the&nbsp;script&nbsp;playing_with_skip_connections.py&nbsp;in<br>
+the&nbsp;Examples&nbsp;directory&nbsp;of&nbsp;the&nbsp;distribution,&nbsp;you&nbsp;can&nbsp;easily&nbsp;create&nbsp;a&nbsp;CNN&nbsp;with<br>
+arbitrary&nbsp;depth&nbsp;just&nbsp;by&nbsp;using&nbsp;the&nbsp;"depth"&nbsp;constructor&nbsp;option&nbsp;for&nbsp;the&nbsp;BMEnet<br>
+class.&nbsp;&nbsp;The&nbsp;basic&nbsp;block&nbsp;of&nbsp;the&nbsp;network&nbsp;constructed&nbsp;by&nbsp;BMEnet&nbsp;is&nbsp;called<br>
+SkipBlock&nbsp;which,&nbsp;very&nbsp;much&nbsp;like&nbsp;the&nbsp;BasicBlock&nbsp;in&nbsp;ResNet-18,&nbsp;has&nbsp;a&nbsp;couple&nbsp;of<br>
+convolutional&nbsp;layers&nbsp;whose&nbsp;output&nbsp;is&nbsp;combined&nbsp;with&nbsp;the&nbsp;input&nbsp;to&nbsp;the&nbsp;block.<br>
+&nbsp;<br>
+Note&nbsp;that&nbsp;the&nbsp;value&nbsp;given&nbsp;to&nbsp;the&nbsp;"depth"&nbsp;constructor&nbsp;option&nbsp;for&nbsp;the<br>
+BMEnet&nbsp;class&nbsp;does&nbsp;NOT&nbsp;translate&nbsp;directly&nbsp;into&nbsp;the&nbsp;actual&nbsp;depth&nbsp;of&nbsp;the<br>
+CNN.&nbsp;[Again,&nbsp;see&nbsp;the&nbsp;script&nbsp;playing_with_skip_connections.py&nbsp;in&nbsp;the&nbsp;Examples<br>
+directory&nbsp;for&nbsp;how&nbsp;to&nbsp;use&nbsp;this&nbsp;option.]&nbsp;The&nbsp;value&nbsp;of&nbsp;"depth"&nbsp;is&nbsp;translated<br>
+into&nbsp;how&nbsp;many&nbsp;instances&nbsp;of&nbsp;SkipBlock&nbsp;to&nbsp;use&nbsp;for&nbsp;constructing&nbsp;the&nbsp;CNN.</tt></dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+
+p<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>__author__</strong> = 'Avinash Kak (kak@purdue.edu)'<br>
+<strong>__copyright__</strong> = '(C) 2020 Avinash Kak. Python Software Foundation.'<br>
+<strong>__date__</strong> = '2020-March-28'<br>
+<strong>__url__</strong> = 'https://engineering.purdue.edu/kak/distDLS/DLStudio-1.1.0.html'<br>
+<strong>__version__</strong> = '1.1.0'</td></tr></table>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#7799ee">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Author</strong></big></font></td></tr>
+<tr><td bgcolor="#7799ee"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Avinash&nbsp;Kak&nbsp;(kak@purdue.edu)</td></tr></table>
+</body></html>

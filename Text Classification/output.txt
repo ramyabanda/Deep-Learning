@@ -1,0 +1,213 @@
++Task 1:
+[epoch:1  iter: 100]     loss: 0.701
+[epoch:1  iter: 200]     loss: 0.683
+[epoch:1  iter: 300]     loss: 0.691
+[epoch:1  iter: 400]     loss: 0.704
+[epoch:1  iter: 500]     loss: 0.694
+[epoch:1  iter: 600]     loss: 0.697
+[epoch:1  iter: 700]     loss: 0.698
+[epoch:1  iter: 800]     loss: 0.696
+[epoch:1  iter: 900]     loss: 0.704
+[epoch:1  iter:1000]     loss: 0.694
+[epoch:1  iter:1100]     loss: 0.699
+[epoch:1  iter:1200]     loss: 0.695
+[epoch:1  iter:1300]     loss: 0.693
+[epoch:1  iter:1400]     loss: 0.698
+[epoch:1  iter:1500]     loss: 0.694
+[epoch:1  iter:1600]     loss: 0.692
+[epoch:1  iter:1700]     loss: 0.704
+[epoch:1  iter:1800]     loss: 0.702
+[epoch:1  iter:1900]     loss: 0.696
+[epoch:1  iter:2000]     loss: 0.695
+[epoch:1  iter:2100]     loss: 0.694
+[epoch:1  iter:2200]     loss: 0.694
+[epoch:1  iter:2300]     loss: 0.690
+[epoch:1  iter:2400]     loss: 0.699
+[epoch:1  iter:2500]     loss: 0.695
+[epoch:1  iter:2600]     loss: 0.697
+[epoch:1  iter:2700]     loss: 0.693
+[epoch:1  iter:2800]     loss: 0.692
+[epoch:1  iter:2900]     loss: 0.693
+[epoch:1  iter:3000]     loss: 0.695
+[epoch:1  iter:3100]     loss: 0.694
+[epoch:1  iter:3200]     loss: 0.690
+[epoch:1  iter:3300]     loss: 0.689
+[epoch:1  iter:3400]     loss: 0.695
+[epoch:1  iter:3500]     loss: 0.696
+[epoch:1  iter:3600]     loss: 0.695
+[epoch:1  iter:3700]     loss: 0.692
+[epoch:1  iter:3800]     loss: 0.692
+[epoch:1  iter:3900]     loss: 0.698
+[epoch:1  iter:4000]     loss: 0.693
+[epoch:1  iter:4100]     loss: 0.691
+[epoch:1  iter:4200]     loss: 0.690
+[epoch:1  iter:4300]     loss: 0.693
+[epoch:1  iter:4400]     loss: 0.693
+[epoch:1  iter:4500]     loss: 0.695
+[epoch:1  iter:4600]     loss: 0.702
+[epoch:1  iter:4700]     loss: 0.695
+[epoch:1  iter:4800]     loss: 0.694
+[epoch:1  iter:4900]     loss: 0.692
+[epoch:1  iter:5000]     loss: 0.689
+[epoch:1  iter:5100]     loss: 0.694
+[epoch:1  iter:5200]     loss: 0.697
+[epoch:1  iter:5300]     loss: 0.695
+[epoch:1  iter:5400]     loss: 0.686
+[epoch:1  iter:5500]     loss: 0.696
+[epoch:1  iter:5600]     loss: 0.703
+[epoch:1  iter:5700]     loss: 0.693
+[epoch:1  iter:5800]     loss: 0.691
+[epoch:1  iter:5900]     loss: 0.689
+[epoch:1  iter:6000]     loss: 0.690
+[epoch:1  iter:6100]     loss: 0.696
+[epoch:1  iter:6200]     loss: 0.692
+[epoch:1  iter:6300]     loss: 0.695
+[epoch:1  iter:6400]     loss: 0.691
+[epoch:1  iter:6500]     loss: 0.695
+[epoch:1  iter:6600]     loss: 0.697
+[epoch:1  iter:6700]     loss: 0.692
+[epoch:1  iter:6800]     loss: 0.695
+[epoch:1  iter:6900]     loss: 0.693
+[epoch:1  iter:7000]     loss: 0.692
+[epoch:1  iter:7100]     loss: 0.697
+[epoch:1  iter:7200]     loss: 0.695
+[epoch:1  iter:7300]     loss: 0.694
+[epoch:1  iter:7400]     loss: 0.695
+                      predicted negative    predicted positive
+true negative:              43.367            56.633
+true positive:              42.143            57.857
+
++Task 2:
+[epoch:1  iter: 100])     loss: 40.520 
+[epoch:1  iter: 200])     loss: 20.724 
+[epoch:1  iter: 300])     loss: 16.820 
+[epoch:1  iter: 400])     loss: 10.137 
+[epoch:1  iter: 500])     loss: 8.907 
+[epoch:1  iter: 600])     loss: 7.028 
+[epoch:1  iter: 700])     loss: 6.920 
+[epoch:1  iter: 800])     loss: 5.816 
+[epoch:1  iter: 900])     loss: 2.603 
+[epoch:1  iter:1000])     loss: 2.134 
+[epoch:1  iter:1100])     loss: 3.646 
+[epoch:1  iter:1200])     loss: 2.368 
+[epoch:1  iter:1300])     loss: 1.715 
+[epoch:1  iter:1400])     loss: 1.054 
+[epoch:1  iter:1500])     loss: 1.403 
+[epoch:1  iter:1600])     loss: 1.253 
+[epoch:1  iter:1700])     loss: 1.092 
+[epoch:1  iter:1800])     loss: 1.056 
+[epoch:1  iter:1900])     loss: 1.089 
+[epoch:1  iter:2000])     loss: 0.791 
+[epoch:1  iter:2100])     loss: 0.831 
+[epoch:1  iter:2200])     loss: 0.783 
+[epoch:1  iter:2300])     loss: 0.957 
+[epoch:1  iter:2400])     loss: 0.809 
+[epoch:1  iter:2500])     loss: 0.887 
+[epoch:1  iter:2600])     loss: 0.804 
+[epoch:1  iter:2700])     loss: 0.736 
+[epoch:1  iter:2800])     loss: 0.786 
+[epoch:1  iter:2900])     loss: 0.770 
+[epoch:1  iter:3000])     loss: 0.704 
+[epoch:1  iter:3100])     loss: 0.720 
+[epoch:1  iter:3200])     loss: 0.701 
+[epoch:1  iter:3300])     loss: 0.690 
+[epoch:1  iter:3400])     loss: 0.760 
+[epoch:1  iter:3500])     loss: 0.720 
+[epoch:1  iter:3600])     loss: 0.706 
+[epoch:1  iter:3700])     loss: 0.720 
+[epoch:1  iter:3800])     loss: 0.708 
+[epoch:1  iter:3900])     loss: 0.741 
+[epoch:1  iter:4000])     loss: 0.716 
+[epoch:1  iter:4100])     loss: 0.729 
+[epoch:1  iter:4200])     loss: 0.769 
+[epoch:1  iter:4300])     loss: 0.698 
+[epoch:1  iter:4400])     loss: 0.666 
+[epoch:1  iter:4500])     loss: 0.735 
+[epoch:1  iter:4600])     loss: 0.724 
+[epoch:1  iter:4700])     loss: 0.694 
+[epoch:1  iter:4800])     loss: 0.718 
+[epoch:1  iter:4900])     loss: 0.698 
+[epoch:1  iter:5000])     loss: 0.712 
+[epoch:1  iter:5100])     loss: 0.707 
+[epoch:1  iter:5200])     loss: 0.684 
+[epoch:1  iter:5300])     loss: 0.737 
+[epoch:1  iter:5400])     loss: 0.713 
+[epoch:1  iter:5500])     loss: 0.715 
+[epoch:1  iter:5600])     loss: 0.718 
+[epoch:1  iter:5700])     loss: 0.707 
+[epoch:1  iter:5800])     loss: 0.692 
+[epoch:1  iter:5900])     loss: 0.710 
+[epoch:1  iter:6000])     loss: 0.729 
+[epoch:1  iter:6100])     loss: 0.707 
+[epoch:1  iter:6200])     loss: 0.709 
+[epoch:1  iter:6300])     loss: 0.714 
+[epoch:1  iter:6400])     loss: 0.701 
+[epoch:1  iter:6500])     loss: 0.698 
+[epoch:1  iter:6600])     loss: 0.698 
+[epoch:1  iter:6700])     loss: 0.684 
+[epoch:1  iter:6800])     loss: 0.707 
+[epoch:1  iter:6900])     loss: 0.712 
+[epoch:1  iter:7000])     loss: 0.721 
+[epoch:1  iter:7100])     loss: 0.661 
+[epoch:1  iter:7200])     loss: 0.715 
+[epoch:1  iter:7300])     loss: 0.711 
+[epoch:1  iter:7400])     loss: 0.707 
+                      predicted negative    predicted positive
+true negative:               77.48             22.52
+true positive:              80.816            19.184
+
++Task 3:
+[epoch:1  iter: 100])     loss: 2.315
+[epoch:1  iter: 200])     loss: 2.799
+[epoch:1  iter: 300])     loss: 3.210
+[epoch:1  iter: 400])     loss: 2.070
+[epoch:1  iter: 500])     loss: 2.194
+[epoch:1  iter: 600])     loss: 3.399
+[epoch:1  iter: 700])     loss: 3.727
+[epoch:1  iter: 800])     loss: 2.284
+[epoch:1  iter: 900])     loss: 2.077
+[epoch:1  iter:1000])     loss: 2.342
+[epoch:1  iter:1100])     loss: 2.731
+[epoch:1  iter:1200])     loss: 1.891
+[epoch:1  iter:1300])     loss: 2.114
+[epoch:1  iter:1400])     loss: 2.753
+[epoch:1  iter:1500])     loss: 2.501
+[epoch:1  iter:1600])     loss: 2.479
+[epoch:1  iter:1700])     loss: 2.581
+[epoch:1  iter:1800])     loss: 1.810
+[epoch:1  iter:1900])     loss: 2.316
+[epoch:1  iter:2000])     loss: 2.770
+[epoch:1  iter:2100])     loss: 3.078
+[epoch:1  iter:2200])     loss: 2.244
+[epoch:1  iter:2300])     loss: 1.708
+[epoch:1  iter:2400])     loss: 1.406
+[epoch:1  iter:2500])     loss: 2.134
+[epoch:2  iter: 100])     loss: 1.467
+[epoch:2  iter: 200])     loss: 1.519
+[epoch:2  iter: 300])     loss: 1.468
+[epoch:2  iter: 400])     loss: 1.326
+[epoch:2  iter: 500])     loss: 1.561
+[epoch:2  iter: 600])     loss: 1.272
+[epoch:2  iter: 700])     loss: 2.037
+[epoch:2  iter: 800])     loss: 1.666
+[epoch:2  iter: 900])     loss: 1.417
+[epoch:2  iter:1000])     loss: 1.213
+[epoch:2  iter:1100])     loss: 1.349
+[epoch:2  iter:1200])     loss: 1.960
+[epoch:2  iter:1300])     loss: 1.136
+[epoch:2  iter:1400])     loss: 1.054
+[epoch:2  iter:1500])     loss: 1.438
+[epoch:2  iter:1600])     loss: 1.226
+[epoch:2  iter:1700])     loss: 1.297
+[epoch:2  iter:1800])     loss: 1.157
+[epoch:2  iter:1900])     loss: 1.402
+[epoch:2  iter:2000])     loss: 0.930
+[epoch:2  iter:2100])     loss: 1.727
+[epoch:2  iter:2200])     loss: 1.571
+[epoch:2  iter:2300])     loss: 1.048
+[epoch:2  iter:2400])     loss: 1.215
+[epoch:2  iter:2500])     loss: 1.239
+                      predicted negative    predicted positive
+ 
+true negative:              92.849             7.151
+true positive:              93.265             6.735

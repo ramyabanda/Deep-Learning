@@ -1,0 +1,46 @@
++Task 2:
+Dataset0 Classification Accuracy: 15.0%
+Dataset0 Confusion Matrix:
+                      rectangle       triangle           disk           oval           star
+   rectangle:            25.00           0.00          75.00           0.00           0.00
+    triangle:            50.00           0.00          25.00          25.00           0.00
+        disk:            50.00           0.00          50.00           0.00           0.00
+        oval:            50.00           0.00          50.00           0.00           0.00
+        star:            50.00           0.00          25.00          25.00           0.00
+
+Dataset20 Classification Accuracy: 63.6%
+Dataset20 Confusion Matrix:
+                      rectangle       triangle           disk           oval           star
+   rectangle:            46.50           3.50          10.50          20.50          19.00
+    triangle:             8.00          70.50          16.50           1.50           3.50
+        disk:             7.00           1.50          80.50           4.50           6.50
+        oval:            31.00           1.00           5.00          49.50          13.50
+        star:             9.00           4.50           7.50           8.00          71.00
+
+Dataset50 Classification Accuracy: 59.7%
+Dataset50 Confusion Matrix:
+                      rectangle       triangle           disk           oval           star
+   rectangle:            38.50           5.00          14.50          23.00          19.00
+    triangle:            10.50          65.00          17.00           1.50           6.00
+        disk:             9.00           2.00          75.50           3.00          10.50
+        oval:            37.00           0.50          10.00          42.50          10.00
+        star:            10.00           3.50           4.50           5.00          77.00
+
+Dataset80 Classification Accuracy: 53.5%
+Dataset80 Confusion Matrix:
+                      rectangle       triangle           disk           oval           star
+   rectangle:            39.00           4.50           9.00          31.50          16.00
+    triangle:             7.00          78.00           8.00           1.50           5.50
+        disk:            15.50           8.50          48.50          13.50          14.00
+        oval:            37.00           3.50           7.50          42.50           9.50
+        star:            18.50           5.50           5.50          11.00          59.50
+
++Task 4:
+Dataset50 Classification Accuracy: 64.4%
+Dataset50 Confusion Matrix:
+                      rectangle       triangle           disk           oval           star
+   rectangle:            38.50           8.00           8.00          33.00          12.50
+    triangle:             7.50          77.00           8.00           2.00           5.50
+        disk:             6.50           7.00          72.50           7.00           7.00
+        oval:            25.00           0.00           7.00          60.50           7.50
+        star:            12.00           3.00           5.00           6.50          73.50

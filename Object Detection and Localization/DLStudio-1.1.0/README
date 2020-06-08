@@ -1,0 +1,23 @@
+Every design activity involves mixing and matching things
+and doing so repeatedly until you have achieved the desired
+goals.  The same thing is true of modern deep learning
+networks.  When you are working with a new data domain, it
+is likely that you would want to experiment with different
+network layouts that may be a product of your own mind or
+that you may have seen elsewhere in some publication or in
+some webpage.
+
+The goal of this module is to make it easier to engage in
+this process.  The idea is that you should be able to drop
+in a new network and, assuming that you are able to use,
+say, the Torchvision data loaders, you should be able to see
+right away the results with the new network.
+
+This module also allows you to specify a network with just a
+configuration string.  The module parses the string and
+creates the network.
+
+I expect the module to undergo considerable evolution over
+the next year --- especially so this semester as I am
+teaching the programming aspects of deep learning networks.
+    

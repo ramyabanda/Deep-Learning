@@ -1,0 +1,11 @@
+[epoch:1] loss: 1.615
+[epoch:2] loss: 1.198
+[epoch:3] loss: 1.001
+[epoch:4] loss: 0.842
+[epoch:5] loss: 0.714
+[epoch:6] loss: 0.605
+[epoch:7] loss: 0.503
+[epoch:8] loss: 0.426
+[epoch:9] loss: 0.359
+[epoch:10] loss: 0.298
+Classification Accuracy :58.75%
